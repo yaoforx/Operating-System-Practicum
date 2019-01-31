@@ -29,5 +29,6 @@ typedef struct queue{
 
 typedef struct item{
     int data;
+
 }item;
 

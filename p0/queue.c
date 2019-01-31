@@ -131,11 +131,7 @@ queue_free (queue_t *queue) {
         return -1;
     struct node* next;
 
-    for(struct node* cur = queue->head; cur!= NULL; cur = next) {
-        next = cur->next;
-        free(cur);
-        if(next == NULL) break;
-    }
+    free(queue);
     return 0;
 
 }

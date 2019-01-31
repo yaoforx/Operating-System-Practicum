@@ -8,7 +8,11 @@
     Write good tests!
 
 */
-
+/**
+ * Helper function to print the queue
+ * @param i
+ * @param arg
+ */
 void print_queue(void* i, void* arg) {
     if(((struct node*)i)->next)
         printf("%d->", ((struct item *)(((struct node*)i)->item_))->data);
@@ -16,8 +20,11 @@ void print_queue(void* i, void* arg) {
         printf("%d\n", ((struct item *)(((struct node*)i)->item_))->data);
 
 }
-// Test 1 is given to you
-
+/**
+ * Test queue_prepend can prepend elem to the queue
+ * @param times
+ * @return 0/1
+ */
 int test_prepend(int times) {
     struct item num[times];
     struct item *iter = num;
@@ -51,6 +58,11 @@ int test_prepend(int times) {
 
     return 0;
 }
+/**
+ * Test queue_append can append elem to the queue
+ * @param times
+ * @return 0/1
+ */
 void test_append(int times){
     struct item num[times];
     struct item *iter = num;
@@ -80,6 +92,11 @@ void test_append(int times){
     printf("Append success\n");
     queue_free(new);
 }
+/**
+ * Test queue_dequeue can dequeue the first elem in the queue and return it
+ * @param times
+ * @return 0/1
+ */
 int test_dequeue(int times) {
 
     item num[times];
@@ -107,6 +124,11 @@ int test_dequeue(int times) {
     return 0;
 
 }
+/**
+ * test queue_iterate can iterate through queue
+ * @param times
+ * @return
+ */
 int test_iterate(int times) {
     int i = 1;
     item num[times];
@@ -127,6 +149,12 @@ int test_iterate(int times) {
     free(new);
     return err;
 }
+/**
+ * This test_delete tests functionality that queue_delete can delete specified item
+ *
+ * @param times
+ * @return
+ */
 int test_delete(int times) {
 
     item num[times];
@@ -157,11 +185,48 @@ int test_delete(int times) {
 
 
 }
+/**
+ * This test_delete tests functionality that queue_delete can delete which ever the specified
+ * first item appeared in the queue.
+ * @param times
+ * @return 0/1
+ */
+int test_delete2(int times){
+    item num[times];
+    item *iter = num;
+    queue_t* new = queue_new();
+    for(int i = 1; i <= times/10; ++i) {
+        num[i-1].data = i;
+
+    }
+    //apppend 12345678910 12345678910...10times
+    for (int j = 1; j < times/10; j++)
+        for(int i = 1; i <= times/10; i++) {
+
+
+            if (-1 == queue_append(new, iter + i - 1))
+                printf("queue_append failed on i = %d\n", i);
+
+
+    }
+
+    int err = queue_delete(new, (void**)num);//delete first 1
+    if(err == -1) return -1;
+    err = queue_delete(new, (void**)(num + 1));//delete first 2
+    if(err == -1) return -1;
+    err = queue_delete(new, (void**)(num + 2));//delete first 3
+    if(err == -1) return -1;
+    err = queue_delete(new, (void**)(num + 9));//delete first 10
+    queue_iterate(new, print_queue, NULL);
+    free(new);
+    return err;
+}
 int main(void) {
     const int test_time = 100;
-//    test_prepend(test_time);
-//    test_append(test_time);
-//    test_dequeue(test_time);
-//    test_iterate(test_time);
+   test_prepend(test_time);
+   test_append(test_time);
+   test_dequeue(test_time);
+   test_iterate(test_time);
     test_delete(test_time);
+    test_delete2(test_time);
 }
