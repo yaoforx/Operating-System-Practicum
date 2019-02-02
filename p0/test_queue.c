@@ -1,5 +1,4 @@
 #include "queue.h"
-#include "node.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <assert.h>
@@ -23,7 +22,7 @@ void print_queue(void* i, void* arg) {
 /**
  * Test queue_prepend can prepend elem to the queue
  * @param times
- * @return 0/1
+ * @return 0/-1
  */
 int test_prepend(int times) {
     struct item num[times];
@@ -35,8 +34,10 @@ int test_prepend(int times) {
 
         num[i-1].data = i;
 
-        if (-1 == queue_prepend(new, iter + i - 1))
+        if (-1 == queue_prepend(new, iter + i - 1)){
             printf("queue_prepend failed on i = %d\n",i);
+            return -1;
+        }
     }
     printf("Test prepend\n");
     struct node * it = new->tail;
@@ -65,7 +66,7 @@ int test_prepend(int times) {
 /**
  * Test queue_append can append elem to the queue
  * @param times
- * @return 0/1
+ * @return 0/-1
  */
 int test_append(int times){
     struct item num[times];
@@ -77,8 +78,10 @@ int test_append(int times){
 
         num[i-1].data = i;
 
-        if (-1 == queue_append(new, iter + i - 1))
+        if (-1 == queue_append(new, iter + i - 1)){
             printf("queu_append failed on i = %d\n",i);
+            return -1;
+        }
     }
     printf("Test append\n");
     struct node * it = new->head;
@@ -107,7 +110,7 @@ int test_append(int times){
 /**
  * Test queue_dequeue can dequeue the first elem in the queue and return it
  * @param times
- * @return 0/1
+ * @return 0/-1
  */
 int test_dequeue(int times) {
 
@@ -120,15 +123,17 @@ int test_dequeue(int times) {
 
         num[i-1].data = i;
 
-        if (-1 == queue_append(new, iter + i - 1))
+        if (-1 == queue_append(new, iter + i - 1)){
             printf("queue_append failed on i = %d\n",i);
+            return -1;
+        }
         assert(new->length == i);
     }
 
     int i = 1;
     int len = times;
     while (iter != NULL && !queue_dequeue(new, (void**)&iter)) {
-        printf("Dequeue the first elem of the queue: %d\n", iter->data);
+        // printf("Dequeue the first elem of the queue: %d\n", iter->data);
         assert(new->length == --len);
         assert(iter->data == i++);
     }
@@ -141,7 +146,7 @@ int test_dequeue(int times) {
 /**
  * test queue_iterate can iterate through queue
  * @param times
- * @return
+ * @return 0/-1
  */
 int test_iterate(int times) {
     int i = 1;
@@ -154,8 +159,10 @@ int test_iterate(int times) {
 
         num[i-1].data = i;
 
-        if (-1 == queue_append(new, iter + i - 1))
+        if (-1 == queue_append(new, iter + i - 1)){
             printf("queue_append failed on i = %d\n",i);
+            return -1;
+        }
         assert(new->length == i);
     }
     int err = queue_iterate(new, print_queue, NULL);
@@ -167,7 +174,7 @@ int test_iterate(int times) {
  * This test_delete tests functionality that queue_delete can delete specified item
  *
  * @param times
- * @return
+ * @return 0/-1
  */
 int test_delete(int times) {
 
@@ -180,8 +187,10 @@ int test_delete(int times) {
 
         num[i-1].data = i;
 
-        if (-1 == queue_append(new, iter + i - 1))
+        if (-1 == queue_append(new, iter + i - 1)){
             printf("queue_append failed on i = %d\n",i);
+            return -1;
+        }
         assert(new->length == i);
     }
     int err = queue_delete(new, num + 10);
@@ -191,11 +200,21 @@ int test_delete(int times) {
     }
     queue_iterate(new, print_queue, NULL);
     err = queue_delete(new, num + times - 1);
+    if(err == -1) {
+        perror("Delete failed\n");
+        return -1;
+    }
+
     queue_iterate(new, print_queue, NULL);
     err = queue_delete(new, num);
+    if(err == -1) {
+        perror("Delete failed\n");
+        return -1;
+    }
+
     queue_iterate(new, print_queue, NULL);
     free(new);
-    return err;
+    return 0;
 
 
 }
@@ -203,7 +222,7 @@ int test_delete(int times) {
  * This test_delete tests functionality that queue_delete can delete which ever the specified
  * first item appeared in the queue.
  * @param times
- * @return 0/1
+ * @return 0/-1
  */
 int test_delete2(int times){
     item num[times];
@@ -218,23 +237,51 @@ int test_delete2(int times){
         for(int i = 1; i <= times/10; i++) {
 
 
-            if (-1 == queue_append(new, iter + i - 1))
+            if (-1 == queue_append(new, iter + i - 1)){
                 printf("queue_append failed on i = %d\n", i);
+                return -1;
+            }
 
 
     }
 
     int err = queue_delete(new, (void**)num);//delete first 1
-    if(err == -1) return -1;
+    if(err == -1) {
+        perror("Delete failed\n");
+        return -1;
+    }
+
     err = queue_delete(new, (void**)(num + 1));//delete first 2
-    if(err == -1) return -1;
+    if(err == -1) {
+        perror("Delete failed\n");
+        return -1;
+    }
+
+
     err = queue_delete(new, (void**)(num + 2));//delete first 3
-    if(err == -1) return -1;
+    if(err == -1) {
+        perror("Delete failed\n");
+        return -1;
+    }
+
+
     err = queue_delete(new, (void**)(num + 9));//delete first 10
+    if(err == -1) {
+        perror("Delete failed\n");
+        return -1;
+    }
+
     queue_iterate(new, print_queue, NULL);
     free(new);
-    return err;
+    return 0;
 }
+
+/**
+ * Test both queue_prepend and queue_append
+ * @param times
+ * @return 0/-1
+ */
+
 
 int test_prepend_append(int times){
     struct item num[times];
@@ -247,12 +294,16 @@ int test_prepend_append(int times){
         num[i-1].data = i;
         
         if(i%2==0){
-            if (-1 == queue_append(new, iter + i - 1))
+            if (-1 == queue_append(new, iter + i - 1)){
                 printf("queu_append failed on i = %d\n",i);
+                return -1;
+            }
         }
         else{
-            if (-1 == queue_prepend(new, iter + i - 1))
+            if (-1 == queue_prepend(new, iter + i - 1)){
                 printf("queu_prepend failed on i = %d\n",i);
+                return -1;
+            }
         }
             
     }
@@ -289,6 +340,13 @@ int test_prepend_append(int times){
 
 }
 
+/**
+ * Test queue_free can free an empty queue
+ * @param times
+ * @return 0/-1
+ */
+
+
 int test_free(int times){
     item num[times];
     item *iter = num;
@@ -299,8 +357,10 @@ int test_free(int times){
 
         num[i-1].data = i;
 
-        if (-1 == queue_append(new, iter + i - 1))
+        if (-1 == queue_append(new, iter + i - 1)){
             printf("queue_append failed on i = %d\n",i);
+            return -1;
+        }
         assert(new->length == i);
     }
 
@@ -310,43 +370,133 @@ int test_free(int times){
         assert(new->length == --len);
     }
 
+    return queue_free(new);
+}
+/**
+ * This test tests freeing non-empty queue raises error
+ * @param times
+ * @return 0/-1
+ */
+int test_delete_nonempty(int times) {
+    item num[times];
+    item *iter = num;
+    queue_t* new = queue_new();
+
+    printf("Append 1 to %d:\n",times);
+    for(int i = 1; i <= times; ++i) {
+
+        num[i-1].data = i;
+
+        if (-1 == queue_append(new, iter + i - 1)) {
+            printf("queue_append failed on i = %d\n", i);
+            return -1;
+        }
+        assert(new->length == i);
+    }
     int err = queue_free(new);
+    free(new);
+    assert(err == -1);
+
+    return 0;
+
+
+}
+/**
+This test case tests dequeue over times causing failures
+**/
+int  test_overDequeue(int times) {
+    item num[1];
+    num[0].data = 1;
+    queue_t * new = queue_new();
+    queue_append(new, num);
+    int err1 = queue_dequeue(new, (void**)&num);
+
+    assert(err1 == 0);
+    int err2 = queue_dequeue(new, (void**)&num);
+    free(new);
+    assert(err2 == -1);
+
+    return 0;
+
+
+}
+
+int test_one_iterate(int times){
+    item num[1];
+    num[0].data = 1;
+    queue_t * new = queue_new();
+    queue_append(new, num);
+    int err = queue_iterate(new, print_queue, NULL);
+
+    free(new);
     return err;
 }
 
 
 int main(void) {
     const int test_time = 100;
-
+    int err = 0;
     printf("Starting prepend test\n");
-    test_prepend(test_time);
+    err = test_prepend(test_time);
+    if(err == -1) return -1;
     printf("Prepend test done\n\n");
-    
+
     printf("Starting append test\n");
-    test_append(test_time);
+    err = test_append(test_time);
+    if(err == -1) return -1;
     printf("Append test done\n\n");
-    
+
+    printf("Starting dequeue test with insufficient element\n");
+    err = test_overDequeue(test_time);
+    if(err == -1) return -1;
+    printf("overDequeue test done\n\n");
+
+    printf("Starting Delete non-empty queue test\n");
+    err = test_delete_nonempty(test_time);
+    if(err == -1) return -1;
+    printf("Delete non-empty queue test done\n\n");
+
     printf("Starting dequeue test\n");
-    test_dequeue(test_time);
+    err = test_dequeue(test_time);
+    if(err == -1) return -1;
     printf("Dequeue test done\n\n");
 
+    printf("Starting dequeue test with insufficient element\n");
+    err = test_overDequeue(test_time);
+    if(err == -1) return -1;
+    printf("overDequeue test done\n\n");
+
+    printf("Starting 1 element iterate test\n");
+    err = test_one_iterate(test_time);
+    if(err == -1) return -1;
+    printf("Iterate 1 element test done\n\n");
+
     printf("Starting iterate test\n");
-    test_iterate(test_time);
+    err = test_iterate(test_time);
+    if(err == -1) return -1;
     printf("Iterate test done\n\n");
 
     printf("Starting delete test\n");
-    test_delete(test_time);
+    err = test_delete(test_time);
+    if(err == -1) return -1;
     printf("Delete test done\n\n");
 
     printf("Starting another delete test2\n");
-    test_delete2(test_time);
+    err = test_delete2(test_time);
+    if(err == -1) return -1;
     printf("Another Delete test done\n\n");
 
     printf("Starting prepend and append test\n");
-    test_prepend_append(test_time);
+    err = test_prepend_append(test_time);
+    if(err == -1) return -1;
     printf("Prepend and append test done\n\n");
 
+
+
     printf("Starting free test\n");
-    test_free(test_time);
+    err = test_free(test_time);
+    if(err == -1) return -1;
     printf("Free test done\n\n");
+
+    return 0;
 }

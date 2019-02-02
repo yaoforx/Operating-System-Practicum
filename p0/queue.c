@@ -3,7 +3,6 @@
  *
  */
 #include "queue.h"
-#include "node.h"
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -94,9 +93,6 @@ queue_dequeue(queue_t *queue, void** item) {
     }
 
 	*item = queue->head->item_;
-
-    // printf("\nTo Dequeue The first element is %d\n", ((struct item*)(queue->head->item_))->data);
-
 	if(queue->length == 1)
 		queue->head = queue->tail = NULL;
 	else{
@@ -127,16 +123,7 @@ queue_free (queue_t *queue) {
 	if(queue == NULL || queue->length != 0){
 		perror("Illegal inputs");
 		return -1;
-	} 
-    
-    struct node* nxt = NULL;
-	for(struct node* cur = queue->head; cur != NULL; cur = nxt){
-		nxt = cur->next;
-		free(cur);
-
-		queue->length--;
 	}
-    
     free(queue);
 	return 0;
 
@@ -182,8 +169,7 @@ queue_delete(queue_t *queue, void* item) {
 
     printf("Deleted %d\n", ((struct item *) item)->data);
 
-    free(q);
-    
+
     return 0;
 
 	

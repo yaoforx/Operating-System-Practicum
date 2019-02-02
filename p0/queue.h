@@ -2,6 +2,24 @@
  * Generic queue manipulation functions
  */
 
+
+/**
+ * Data structure that is implemented underneath a queue to support queue operations
+ * @author: Yao Xiao & Lijie Tu
+ */
+
+struct node {
+    struct node* prev;
+    struct node* next;
+    void* item_;
+};
+
+
+typedef struct item{
+    int data;
+}item;
+
+
 /*
  * queue_t is a pointer to an internally maintained data structure.
  * Clients of this package do not need to know how queues are
