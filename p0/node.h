@@ -2,15 +2,14 @@
 // Created by Yao Xiao on 1/28/19.
 //
 
-#ifndef CS4411_NODE_H
-#define CS4411_NODE_H
+#ifndef NODE_H
+#define NODE_H
 
-#endif //CS4411_NODE_H
+#endif //NODE_H
 
-#include "queue.h"
 /**
- * Data structure that is implemented underneath queue to support queue operations
- * @author: Yao Xiao
+ * Data structure that is implemented underneath a queue to support queue operations
+ * @author: Yao Xiao & Lijie Tu
  */
 
 struct node {
@@ -19,16 +18,8 @@ struct node {
     void* item_;
 };
 
-typedef struct queue{
-    struct node * head;
-    struct node * tail;
-    int length;
-// Your code here
-
-} queue;
 
 typedef struct item{
     int data;
-
 }item;
 

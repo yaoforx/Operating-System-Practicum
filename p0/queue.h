@@ -9,7 +9,12 @@
  */
 
 
-typedef struct queue queue_t;
+typedef struct queue{
+    struct node * head;
+    struct node * tail;
+    int length;
+
+} queue_t;
 
 /*
  * Return an empty queue.  Returns NULL on error.
