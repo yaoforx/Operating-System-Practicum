@@ -437,66 +437,54 @@ int main(void) {
     const int test_time = 100;
     int err = 0;
     printf("Starting prepend test\n");
-    err = test_prepend(test_time);
-    if(err == -1) return -1;
+    if(test_prepend(test_time) == -1) return -1;
     printf("Prepend test done\n\n");
 
     printf("Starting append test\n");
-    err = test_append(test_time);
-    if(err == -1) return -1;
+    if(test_append(test_time) == -1) return -1;
     printf("Append test done\n\n");
 
     printf("Starting dequeue test with insufficient element\n");
-    err = test_overDequeue(test_time);
-    if(err == -1) return -1;
+    if(test_overDequeue(test_time) == -1) return -1;
     printf("overDequeue test done\n\n");
 
     printf("Starting Delete non-empty queue test\n");
-    err = test_delete_nonempty(test_time);
-    if(err == -1) return -1;
+    if(test_delete_nonempty(test_time) == -1) return -1;
     printf("Delete non-empty queue test done\n\n");
 
     printf("Starting dequeue test\n");
-    err = test_dequeue(test_time);
-    if(err == -1) return -1;
+    if(test_dequeue(test_time) == -1) return -1;
     printf("Dequeue test done\n\n");
 
     printf("Starting dequeue test with insufficient element\n");
-    err = test_overDequeue(test_time);
-    if(err == -1) return -1;
+    if(test_overDequeue(test_time) == -1) return -1;
     printf("overDequeue test done\n\n");
 
     printf("Starting 1 element iterate test\n");
-    err = test_one_iterate(test_time);
-    if(err == -1) return -1;
+    if(test_one_iterate(test_time) == -1) return -1;
     printf("Iterate 1 element test done\n\n");
 
     printf("Starting iterate test\n");
-    err = test_iterate(test_time);
-    if(err == -1) return -1;
+    if(test_iterate(test_time) == -1) return -1;
     printf("Iterate test done\n\n");
 
     printf("Starting delete test\n");
-    err = test_delete(test_time);
-    if(err == -1) return -1;
+    if(test_delete(test_time) == -1) return -1;
     printf("Delete test done\n\n");
 
     printf("Starting another delete test2\n");
-    err = test_delete2(test_time);
-    if(err == -1) return -1;
+    if(test_delete2(test_time) == -1) return -1;
     printf("Another Delete test done\n\n");
 
     printf("Starting prepend and append test\n");
-    err = test_prepend_append(test_time);
-    if(err == -1) return -1;
+    if(test_prepend_append(test_time) == -1) return -1;
     printf("Prepend and append test done\n\n");
 
-
-
     printf("Starting free test\n");
-    err = test_free(test_time);
-    if(err == -1) return -1;
+    if(test_free(test_time) == -1) return -1;
     printf("Free test done\n\n");
+
+    printf("All tests pass\n\n");
 
     return 0;
 }
