@@ -1,0 +1,414 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="egos"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/Users/yaoxiao/CS4411/egos/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/yaoxiao/CS4411/egos/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/yaoxiao/CS4411/egos/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/yaoxiao/CS4411/egos/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/yaoxiao/CS4411/egos/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/Users/yaoxiao/CS4411/egos/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/yaoxiao/CS4411/egos/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/yaoxiao/CS4411/egos/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/yaoxiao/CS4411/egos/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/yaoxiao/CS4411/egos/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/Users/yaoxiao/CS4411/egos/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/yaoxiao/CS4411/egos/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/yaoxiao/CS4411/egos/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/yaoxiao/CS4411/egos/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/yaoxiao/CS4411/egos/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="egos">
+				<Option output="/Users/yaoxiao/CS4411/egos/cmake-build-debug/egos" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/yaoxiao/CS4411/egos/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/Library/Developer/CommandLineTools/usr/include/c++/v1"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/lib/clang/10.0.0/include"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/include"/>
+					<Add directory="/System/Library/Frameworks"/>
+					<Add directory="/Library/Frameworks"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/yaoxiao/CS4411/egos/cmake-build-debug/Makefile&quot;  VERBOSE=1 egos"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/yaoxiao/CS4411/egos/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/yaoxiao/CS4411/egos/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/yaoxiao/CS4411/egos/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="egos/fast">
+				<Option output="/Users/yaoxiao/CS4411/egos/cmake-build-debug/egos" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/yaoxiao/CS4411/egos/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/Library/Developer/CommandLineTools/usr/include/c++/v1"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/lib/clang/10.0.0/include"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/include"/>
+					<Add directory="/System/Library/Frameworks"/>
+					<Add directory="/Library/Frameworks"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/yaoxiao/CS4411/egos/cmake-build-debug/Makefile&quot;  VERBOSE=1 egos/fast"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/yaoxiao/CS4411/egos/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/yaoxiao/CS4411/egos/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/yaoxiao/CS4411/egos/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/apps/cat.c">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/apps/chmod.c">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/apps/cp.c">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/apps/echo.c">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/apps/ed.c">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/apps/init.c">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/apps/kill.c">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/apps/login.c">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/apps/loop.c">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/apps/ls.c">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/apps/mkdir.c">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/apps/mt.c">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/apps/passwd.c">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/apps/pwd.c">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/apps/pwdsvr.c">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/apps/pwdsvr.h">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/apps/shell.c">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/earth/clock.c">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/earth/clock.h">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/earth/devdisk.c">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/earth/devdisk.h">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/earth/devtty.c">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/earth/devtty.h">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/earth/devudp.c">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/earth/devudp.h">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/earth/earth.h">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/earth/intr.c">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/earth/intr.h">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/earth/log.c">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/earth/log.h">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/earth/mem.c">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/earth/mem.h">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/earth/myalloc.c">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/earth/myalloc.h">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/earth/prot.c">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/earth/prot.h">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/earth/tlb.c">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/earth/tlb.h">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/grass/blkfilesvr.c">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/grass/block/block_store.h">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/grass/block/cachedisk.c">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/grass/block/checkdisk.c">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/grass/block/clockdisk.c">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/grass/block/debugdisk.c">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/grass/block/fatdisk.c">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/grass/block/fatdisk.h">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/grass/block/filedisk.c">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/grass/block/grass.h">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/grass/block/partdisk.c">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/grass/block/protdisk.c">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/grass/block/raid0disk.c">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/grass/block/raid1disk.c">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/grass/block/ramdisk.c">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/grass/block/statdisk.c">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/grass/block/treedisk.c">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/grass/block/treedisk.h">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/grass/block/treedisk_chk.c">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/grass/blocksvr.c">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/grass/blocksvr.h">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/grass/dirsvr.c">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/grass/disksvr.c">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/grass/egos.h">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/grass/exec.h">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/grass/main.c">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/grass/process.c">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/grass/process.h">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/grass/procsys.c">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/grass/ramfilesvr.c">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/grass/spawnsvr.c">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/grass/ttysvr.c">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/lib/assert.h">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/lib/crt0.c">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/lib/ctype.c">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/lib/ctype.h">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/lib/egos.h">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/lib/end.c">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/lib/exec.c">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/lib/grass_stdio.h">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/lib/grass_stdlib.h">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/lib/malloc.c">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/lib/malloc.h">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/lib/memchan.c">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/lib/memchan.h">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/lib/print.c">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/lib/print.h">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/lib/sha256.c">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/lib/sha256.h">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/lib/stdio.c">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/lib/stdlib.c">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/lib/string.c">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/lib/string.h">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/lib/syscall.c">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/shared/block.c">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/shared/block.h">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/shared/context.h">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/shared/dir.c">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/shared/dir.h">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/shared/ema.c">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/shared/ema.h">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/shared/file.c">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/shared/file.h">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/shared/queue.c">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/shared/queue.h">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/shared/spawn.c">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/shared/spawn.h">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/shared/syscall.h">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/tools/cpr.c">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/tools/elf_cvt.c">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/tools/macho_cvt.c">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

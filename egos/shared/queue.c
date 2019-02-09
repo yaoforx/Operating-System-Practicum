@@ -5,6 +5,7 @@
 #include "egos.h"
 #include "queue.h"
 
+
 /* An element in a queue.
  */
 struct element {

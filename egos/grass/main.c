@@ -400,6 +400,7 @@ static void fs_install(struct grass_env *ge, fid_t etc, fid_t bin, fid_t usr, fi
 	file_install(ge->servers[GPID_DIR], bin, "passwd.exe", 0, P_FILE_DEFAULT);
 	file_install(ge->servers[GPID_DIR], bin, "pwd.exe", 0, P_FILE_DEFAULT);
 	file_install(ge->servers[GPID_DIR], bin, "shell.exe", 0, P_FILE_DEFAULT);
+	file_install(ge->servers[GPID_DIR], bin, "mt.exe", 0, P_FILE_DEFAULT);
 
 	/* TODO.  Get rid of these.
 	 */
