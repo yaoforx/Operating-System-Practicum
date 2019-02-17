@@ -53,7 +53,6 @@ struct thread{
 
 struct monitor {
     struct thread *current_t;
-//    struct thread * idle_t;
     struct thread * next_t;
     struct queue* thread_ready;
 
@@ -77,17 +76,21 @@ void thread_init(){
     monitor = malloc(sizeof(struct monitor));
     monitor->thread_ready = malloc(sizeof(struct queue));
     monitor->thread_exited = malloc(sizeof(struct queue));
-//    monitor->idle_t = malloc(sizeof(struct thread));
+    monitor->current_t = malloc(sizeof(struct thread));
+    id = 0;
+    monitor->current_t->id = id;
+
     queue_init(monitor->thread_ready);
     queue_init(monitor->thread_exited);
-
-    // check validity
+  //  monitor->current_t->stack = malloc(STACKSIZE);
+ //   monitor->current_t->base = (address_t) & monitor->current_t->stack[STACKSIZE];
+ //   // check validity
     if(!monitor->thread_ready || !monitor->thread_exited) {
         perror("Allocations for thread queues failed!");
         sys_exit(1);
     }
-//    monitor->current_t = monitor->idle_t;
-    id = 0;
+
+
 }
 
 /*
@@ -103,6 +106,7 @@ void thread_create(void (*f)(void *arg), void *arg,
     t->base = (address_t) &t->stack[STACKSIZE];
     t->arg = arg;
     t->state = READY;
+    printf("Adding thread %d to ready queue\n",monitor->current_t->id);
     queue_add(monitor->thread_ready, t);
     thread_schedule();
 }
@@ -112,6 +116,7 @@ void ctx_entry(void) {
     /* Invoke the a new thread and call f(), exit()
 	 */
     monitor->current_t->state = STOPPED;
+    printf("1Adding thread %d to ready queue\n",monitor->current_t->id);
     queue_add(monitor->thread_ready, monitor->current_t);
 
     monitor->current_t = monitor->next_t;
@@ -125,45 +130,53 @@ void ctx_entry(void) {
 
 
 static void thread_schedule(){
-    printf("entering schedule\n");
+  //  printf("entering schedule\n");
     struct thread *old = monitor->current_t;
-    monitor->next_t = findRunnable();
-    if (old == monitor->next_t) {
-        return;
-    }
+   // printf("Current running thread is %d\n", monitor->current_t->id);
 
-    printf("Thread id %d Found a runnable thread with id %d\n",old->id, monitor->next_t->id);
+    monitor->next_t = findRunnable();
+
+    while (old == monitor->next_t) {
+        if(old->state == TERMINATED ) {
+                monitor->next_t= findRunnable();
+
+        } else return;
+    }
+    //printf("Thread id %d Found a runnable thread with id %d\n",old->id, monitor->next_t->id);
 
     if(monitor->next_t->state == READY) {
-        printf("Calling ctx_start\n");
         ctx_start(&(old->base), (monitor->next_t->base));
     } else if(monitor->next_t->state == STOPPED) {
+        if(old->state != BLOCKED && old->state != TERMINATED) {
+            old->state = STOPPED;
+            queue_add(monitor->thread_ready, old);
+        }
         monitor->next_t->state = RUNNING;
-        queue_add(monitor->thread_ready, old);
-        old->state = STOPPED;
         monitor->current_t = monitor->next_t;
         ctx_switch(&(old->base), (monitor->next_t->base));
     } else {
-        printf("??? should not be there\n");
-        assert(false);
-       // queue_add(monitor->thread_ready,monitor->next_t);
-        //thread_schedule();
-        //Nothing can run because the states are 'BLOCKED'
+        monitor->next_t->state = RUNNING;
+        monitor->current_t = monitor->next_t;
+        ctx_switch(&(old->base), (monitor->next_t->base));
     }
 
 }
 void thread_yield() {
     if(queue_empty(monitor->thread_ready)) {
-        if(monitor->current_t->state == TERMINATED) sys_exit(1);
+        if(monitor->current_t->state == TERMINATED || monitor->current_t->state == BLOCKED) sys_exit(1);
         else return;
     }
 
-    if(monitor->current_t->state != BLOCKED) {
+    if(monitor->current_t->state != BLOCKED && monitor->current_t->state != TERMINATED) {
         monitor->current_t->state = STOPPED;
         queue_add(monitor->thread_ready, monitor->current_t);
+        struct thread * cur;
+        while((cur = queue_get(monitor->thread_exited)) != NULL) {
+            if(cur->stack)
+                free(cur->stack);
+            free(cur);
+        }
     }
-
-    // Yunhao: clean the exit queue, free their stack
     thread_schedule();
 
 }
@@ -172,41 +185,21 @@ void thread_exit() {
     // queue_add(monitor->thread_exited, monitor->current_t);
     // thread_yield();
 
-    struct thread * cur;
-    monitor->next_t = findRunnable();
-    while(monitor->current_t ==  monitor->next_t) {
-        monitor->next_t = findRunnable();
-    }
-    if(monitor->next_t == NULL) {
-        sys_exit(1);
-    }
-    struct thread * old =  monitor->current_t;
-    struct thread * new = monitor->next_t;
     monitor->current_t->state = TERMINATED;
     queue_add(monitor->thread_exited, monitor->current_t);
-    monitor->current_t = monitor->next_t;
-    monitor->next_t->state = RUNNING;
-    ctx_switch(&(old->base), (new->base));
-    // should never get here
-    // assert(fasle)
-    while((cur = queue_get(monitor->thread_exited)) != NULL) {
-        if(cur->stack)
-            free(cur->stack);
-        free(cur);
-    }
-    if(queue_empty(monitor->thread_ready)) free(monitor->current_t);
+    thread_yield();
+
 
 }
 struct thread*
 findRunnable(){
     if(queue_empty(monitor->thread_ready)) {
-        if (monitor->current_t->state == RUNNING) {
+        if (monitor->current_t->state != TERMINATED && monitor->current_t->state != BLOCKED) {
             return monitor->current_t;
         } else {
             sys_exit(1);
         }
     }
-
     struct thread *t1;
     t1 = queue_get(monitor->thread_ready);
     return t1;
@@ -242,41 +235,38 @@ void sema_init(struct sema *sema, unsigned int count) {
 }
 
 void sema_dec(struct sema* sema){
-    printf("Enter Sema_dec with decrement %d\n", sema->count);
+ //   printf("Enter Sema_dec with decrement %d\n", sema->count);
     if(sema->count == 0){
-        printf("Enter Sema_dec1\n");
+       // printf("Enter Sema_dec1\n");
         monitor->current_t->state = BLOCKED;
-        printf("Enter Sema_dec2\n");
-        printf("current running thread is thread %d\n", monitor->current_t->id);
+      //  printf("Enter Sema_dec2\n");
+       // printf("current running thread is thread %d\n", monitor->current_t->id);
         queue_add(sema->queue_wait, monitor->current_t);
-        printf("Enter Sema_dec3\n");
+       // printf("Enter Sema_dec3\n");
         thread_yield();
 
     } else {
-
-
         sema->count--;
-
     }
-    printf("Hey %d\n", sema->count);
+   // printf("Hey %d\n", sema->count);
 
 }
 
 void sema_inc(struct sema* sema) {
     struct thread *thread1;
-    printf("Thread %d sema_inc count is %d\n", monitor->current_t->id,sema->count);
+   // printf("Thread %d sema_inc count is %d\n", monitor->current_t->id,sema->count);
 
     // Yunhao: the if branch should consider the queue, not the count
-    if(sema->count ==  0) {
-        if(!queue_empty(sema->queue_wait)) {
-            thread1 = (struct thread *)queue_get(sema->queue_wait);
 
-            thread1->state = STOPPED;
-            queue_add(monitor->thread_ready,thread1);
-        } else {
-            sema->count++;
-        }
+    if(!queue_empty(sema->queue_wait)) {
+        thread1 = (struct thread *)queue_get(sema->queue_wait);
+
+        thread1->state = STOPPED;
+        queue_add(monitor->thread_ready,thread1);
+    } else {
+        sema->count++;
     }
+
 }
 
 
@@ -305,7 +295,6 @@ static void consumer(void *arg){
         printf("%s: got ’%s’\n", arg, x);
         if (out == NSLOTS) out = 0;
         sema_inc(&s_lock);
-        printf("Slll\n");
 // finally, signal producers
         sema_inc(&s_empty);
     }
@@ -313,23 +302,17 @@ static void consumer(void *arg){
 
 
 static void producer(void *arg){
-    printf("enter producer\n");
     for (;;) {
 // first make sure there’s an empty slot.
         sema_dec(&s_empty);
-        printf("Sema_dec5\n");
 // now add an entry to the queue
         sema_dec(&s_lock);
-        printf("Sema_dec6  lock\n");
         slots[in++] = arg;
-        printf("Sema_dec7  lock\n");
         if (in == NSLOTS) in = 0;
-        printf("Sema_dec8  lock\n");
+
         sema_inc(&s_lock);
-        printf("Sema_dec9  lock\n");
 // finally, signal consumers
         sema_inc(&s_full);
-        printf("Sema_dec10  lock\n");
     }
 
 }
@@ -347,5 +330,7 @@ int main(int argc, char **argv){
 
     // TODO: other tests
     return 0;
+
+
 }
 
