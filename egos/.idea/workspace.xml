@@ -38,8 +38,8 @@
       <file leaf-file-name="process.c" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/grass/process.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="19133">
-              <caret line="1007" column="14" lean-forward="false" selection-start-line="1007" selection-start-column="4" selection-end-line="1007" selection-end-column="14" />
+            <state relative-caret-position="251">
+              <caret line="463" column="10" lean-forward="false" selection-start-line="463" selection-start-column="10" selection-end-line="463" selection-end-column="10" />
               <folding />
             </state>
           </provider>
@@ -68,8 +68,18 @@
       <file leaf-file-name="mt.c" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/apps/mt.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="213">
-              <caret line="51" column="0" lean-forward="true" selection-start-line="51" selection-start-column="0" selection-end-line="51" selection-end-column="0" />
+            <state relative-caret-position="135">
+              <caret line="247" column="14" lean-forward="false" selection-start-line="247" selection-start-column="8" selection-end-line="247" selection-end-column="14" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="asm_linux_x86_32.s" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/shared/asm_linux_x86_32.s">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="513">
+              <caret line="27" column="4" lean-forward="false" selection-start-line="27" selection-start-column="4" selection-end-line="27" selection-end-column="21" />
               <folding />
             </state>
           </provider>
@@ -78,8 +88,8 @@
       <file leaf-file-name="queue.c" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/shared/queue.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="359">
-              <caret line="27" column="27" lean-forward="false" selection-start-line="27" selection-start-column="27" selection-end-line="27" selection-end-column="27" />
+            <state relative-caret-position="-885">
+              <caret line="43" column="19" lean-forward="false" selection-start-line="43" selection-start-column="19" selection-end-line="43" selection-end-column="19" />
               <folding />
             </state>
           </provider>
@@ -89,18 +99,10 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>load the</find>
-      <find>signal</find>
-      <find>out of range</find>
-      <find>PR</find>
-      <find>PRIaddr</find>
-      <find>proc_pa</find>
-      <find>printf</find>
       <find>(address_t)</find>
       <find>NO_UCONTEXT</find>
       <find>VIRT_BASE</find>
       <find>ctx</find>
-      <find>ctx_</find>
       <find>proc_page</find>
       <find>malloc</find>
       <find>allocate</find>
@@ -119,6 +121,14 @@
       <find>monitor-&gt;thread_ready</find>
       <find>queue_get</find>
       <find>RUNNING</find>
+      <find>ctx_</find>
+      <find>thread_ready</find>
+      <find>pir</find>
+      <find>3</find>
+      <find>queue_add</find>
+      <find>4The</find>
+      <find>4Thr</find>
+      <find>printf</find>
     </findStrings>
   </component>
   <component name="IdeDocumentHistory">
@@ -205,7 +215,7 @@
   <component name="PropertiesComponent">
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="SearchEverywhereHistoryKey" value="proc_page&#9;null&#9;null&#10;ctx_sw&#9;null&#9;null&#10;initialize&#9;null&#9;null&#10;ctx_&#9;null&#9;null&#10;signal_han&#9;null&#9;null&#10;VIRT_BASE&#9;null&#9;null&#10;ctx_switch&#9;null&#9;null&#10;proc_pagefault &#9;null&#9;null&#10;signal&#9;null&#9;null&#10;signa&#9;null&#9;null&#10;signal_h&#9;null&#9;null&#10;depth&#9;null&#9;null&#10;ato&#9;FILE&#9;file:///Library/Developer/CommandLineTools/usr/include/c++/v1/atomic" />
+    <property name="SearchEverywhereHistoryKey" value="ctx&#9;null&#9;null&#10;proc_page&#9;null&#9;null&#10;ctx_sw&#9;null&#9;null&#10;initialize&#9;null&#9;null&#10;ctx_&#9;null&#9;null&#10;signal_han&#9;null&#9;null&#10;VIRT_BASE&#9;null&#9;null&#10;ctx_switch&#9;null&#9;null&#10;proc_pagefault &#9;null&#9;null&#10;signal&#9;null&#9;null&#10;signa&#9;null&#9;null&#10;signal_h&#9;null&#9;null&#10;depth&#9;null&#9;null&#10;ato&#9;FILE&#9;file:///Library/Developer/CommandLineTools/usr/include/c++/v1/atomic" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -266,25 +276,26 @@
       <workItem from="1550259697425" duration="8190000" />
       <workItem from="1550337998674" duration="6374000" />
       <workItem from="1550348747525" duration="6654000" />
-      <workItem from="1550373804029" duration="5402000" />
+      <workItem from="1550373804029" duration="5459000" />
+      <workItem from="1550439306422" duration="5482000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="72718000" />
+    <option name="totallyTimeSpent" value="78257000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="786" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.23185341" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23185341" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="CMake" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3299566" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32850942" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3357453" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3357453" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -293,7 +304,6 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32850942" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
@@ -642,10 +652,34 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/grass/queue.d">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/grass/process.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="251">
+          <caret line="463" column="10" lean-forward="false" selection-start-line="463" selection-start-column="10" selection-end-line="463" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/shared/asm_linux_x86_32.s">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="100">
-          <caret line="6" column="16" lean-forward="false" selection-start-line="6" selection-start-column="16" selection-end-line="6" selection-end-column="16" />
+        <state relative-caret-position="513">
+          <caret line="27" column="4" lean-forward="false" selection-start-line="27" selection-start-column="4" selection-end-line="27" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shared/queue.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-885">
+          <caret line="43" column="19" lean-forward="false" selection-start-line="43" selection-start-column="19" selection-end-line="43" selection-end-column="19" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -657,33 +691,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/grass/queue.d">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/grass/process.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="19133">
-          <caret line="1007" column="14" lean-forward="false" selection-start-line="1007" selection-start-column="4" selection-end-line="1007" selection-end-column="14" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shared/queue.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="359">
-          <caret line="27" column="27" lean-forward="false" selection-start-line="27" selection-start-column="27" selection-end-line="27" selection-end-column="27" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/apps/mt.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="213">
-          <caret line="51" column="0" lean-forward="true" selection-start-line="51" selection-start-column="0" selection-end-line="51" selection-end-column="0" />
+        <state relative-caret-position="135">
+          <caret line="247" column="14" lean-forward="false" selection-start-line="247" selection-start-column="8" selection-end-line="247" selection-end-column="14" />
           <folding />
         </state>
       </provider>

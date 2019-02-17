@@ -103,6 +103,7 @@ void thread_create(void (*f)(void *arg), void *arg,
     t->base = (address_t) &t->stack[STACKSIZE];
     t->arg = arg;
     t->state = READY;
+    printf("1Thread %d adding thread %d to ready queue\n", monitor->current_t->id, t->id);
     queue_add(monitor->thread_ready, t);
     thread_schedule();
 }
@@ -112,6 +113,8 @@ void ctx_entry(void) {
     /* Invoke the a new thread and call f(), exit()
 	 */
     monitor->current_t->state = STOPPED;
+    printf("2Thread %d adding thread %d to ready queue\n", monitor->current_t->id,  monitor->current_t->id);
+
     queue_add(monitor->thread_ready, monitor->current_t);
     monitor->current_t = monitor->next_t;
     monitor->current_t->state = RUNNING;
@@ -126,18 +129,18 @@ static void thread_schedule(){
     struct thread *old = monitor->current_t;
 
     monitor->next_t = findRunnable();
+    printf("Thread %d found a runnable thread %d\n", monitor->current_t->id, monitor->next_t->id);
 
-    while (old == monitor->next_t) {
-        if(old->state == TERMINATED ) {
-                monitor->next_t= findRunnable();
-        } else return;
-    }
+
+    if(old == monitor->next_t) return;
 
     if(monitor->next_t->state == READY) {
         ctx_start(&(old->base), (monitor->next_t->base));
     } else if(monitor->next_t->state == STOPPED) {
         if(old->state != BLOCKED && old->state != TERMINATED) {
             old->state = STOPPED;
+            printf("3Thread %d adding thread %d to ready queue\n", monitor->current_t->id,  old->id);
+
             queue_add(monitor->thread_ready, old);
         }
         monitor->next_t->state = RUNNING;
@@ -153,8 +156,6 @@ void thread_yield() {
     }
 
     if(monitor->current_t->state != BLOCKED && monitor->current_t->state != TERMINATED) {
-        monitor->current_t->state = STOPPED;
-        queue_add(monitor->thread_ready, monitor->current_t);
         struct thread * cur;
         while((cur = queue_get(monitor->thread_exited)) != NULL) {
             if(cur->stack)
@@ -174,6 +175,8 @@ void thread_exit() {
 struct thread*
 findRunnable(){
     if(queue_empty(monitor->thread_ready)) {
+        //printf("Ready queue is empty, return runnable %d\n",monitor->current_t->id);
+
         if (monitor->current_t->state != TERMINATED && monitor->current_t->state != BLOCKED) {
             return monitor->current_t;
         } else {
@@ -182,6 +185,8 @@ findRunnable(){
     }
     struct thread *t1;
     t1 = queue_get(monitor->thread_ready);
+   // printf("Thread %d found a runnable thread %d\n", monitor->current_t->id, t1->id);
+
     return t1;
 }
 /***
@@ -239,7 +244,7 @@ void sema_inc(struct sema* sema) {
 
 static void test_code(void *arg){
     int i;
-    for (i = 0; i < 10; i++) {
+    for (i = 0; i < 5; i++) {
         printf("%s here: %d\n", arg, i);
         thread_yield();
     }
@@ -285,18 +290,18 @@ static void producer(void *arg){
 }
 int main(int argc, char **argv){
     // Initialize threading package
-    thread_init();
-
-    // Initialize semaphores for producer-consumer
+//    thread_init();
+//
+//    // Initialize semaphores for producer-consumer
 //    sema_init(&s_lock, 1);
 //    sema_init(&s_full, 0);
 //    sema_init(&s_empty, NSLOTS);
 //    printf("semaphore initialized\n");
 //    thread_create(consumer, "consumer 1", 16 * 1024);
 //    producer("producer 1");
-//
-//    // TODO: other tests
 //    return 0;
+    // TODO: other tests
+
     thread_init();
     thread_create(test_code, "thread 1", 16 * 1024);
     thread_create(test_code, "thread 2", 16 * 1024);
