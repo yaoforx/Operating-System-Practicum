@@ -46,7 +46,7 @@ struct thread{
 	enum state state;
 	void *arg;
 	void (*ip)(void *);
-    int id;
+    int id; // thread id for debugging purpose
 
 };
 
@@ -82,9 +82,6 @@ void thread_init(){
 
     queue_init(monitor->thread_ready);
     queue_init(monitor->thread_exited);
-  //  monitor->current_t->stack = malloc(STACKSIZE);
- //   monitor->current_t->base = (address_t) & monitor->current_t->stack[STACKSIZE];
- //   // check validity
     if(!monitor->thread_ready || !monitor->thread_exited) {
         perror("Allocations for thread queues failed!");
         sys_exit(1);
@@ -106,7 +103,6 @@ void thread_create(void (*f)(void *arg), void *arg,
     t->base = (address_t) &t->stack[STACKSIZE];
     t->arg = arg;
     t->state = READY;
-    printf("Adding thread %d to ready queue\n",monitor->current_t->id);
     queue_add(monitor->thread_ready, t);
     thread_schedule();
 }
@@ -116,12 +112,9 @@ void ctx_entry(void) {
     /* Invoke the a new thread and call f(), exit()
 	 */
     monitor->current_t->state = STOPPED;
-    printf("1Adding thread %d to ready queue\n",monitor->current_t->id);
     queue_add(monitor->thread_ready, monitor->current_t);
-
     monitor->current_t = monitor->next_t;
     monitor->current_t->state = RUNNING;
-
     (monitor->current_t->ip)(monitor->current_t->arg);
 
     thread_exit();
@@ -130,19 +123,15 @@ void ctx_entry(void) {
 
 
 static void thread_schedule(){
-  //  printf("entering schedule\n");
     struct thread *old = monitor->current_t;
-   // printf("Current running thread is %d\n", monitor->current_t->id);
 
     monitor->next_t = findRunnable();
 
     while (old == monitor->next_t) {
         if(old->state == TERMINATED ) {
                 monitor->next_t= findRunnable();
-
         } else return;
     }
-    //printf("Thread id %d Found a runnable thread with id %d\n",old->id, monitor->next_t->id);
 
     if(monitor->next_t->state == READY) {
         ctx_start(&(old->base), (monitor->next_t->base));
@@ -151,10 +140,6 @@ static void thread_schedule(){
             old->state = STOPPED;
             queue_add(monitor->thread_ready, old);
         }
-        monitor->next_t->state = RUNNING;
-        monitor->current_t = monitor->next_t;
-        ctx_switch(&(old->base), (monitor->next_t->base));
-    } else {
         monitor->next_t->state = RUNNING;
         monitor->current_t = monitor->next_t;
         ctx_switch(&(old->base), (monitor->next_t->base));
@@ -181,14 +166,9 @@ void thread_yield() {
 
 }
 void thread_exit() {
-    // monitor->current_t->status = TEMINATED;
-    // queue_add(monitor->thread_exited, monitor->current_t);
-    // thread_yield();
-
     monitor->current_t->state = TERMINATED;
     queue_add(monitor->thread_exited, monitor->current_t);
     thread_yield();
-
 
 }
 struct thread*
@@ -230,37 +210,24 @@ void sema_init(struct sema *sema, unsigned int count) {
         return;
     }
     sema->count = count;
-
-
 }
 
 void sema_dec(struct sema* sema){
- //   printf("Enter Sema_dec with decrement %d\n", sema->count);
     if(sema->count == 0){
-       // printf("Enter Sema_dec1\n");
         monitor->current_t->state = BLOCKED;
-      //  printf("Enter Sema_dec2\n");
-       // printf("current running thread is thread %d\n", monitor->current_t->id);
         queue_add(sema->queue_wait, monitor->current_t);
-       // printf("Enter Sema_dec3\n");
         thread_yield();
-
     } else {
         sema->count--;
     }
-   // printf("Hey %d\n", sema->count);
 
 }
 
 void sema_inc(struct sema* sema) {
     struct thread *thread1;
-   // printf("Thread %d sema_inc count is %d\n", monitor->current_t->id,sema->count);
-
-    // Yunhao: the if branch should consider the queue, not the count
 
     if(!queue_empty(sema->queue_wait)) {
         thread1 = (struct thread *)queue_get(sema->queue_wait);
-
         thread1->state = STOPPED;
         queue_add(monitor->thread_ready,thread1);
     } else {
@@ -321,14 +288,19 @@ int main(int argc, char **argv){
     thread_init();
 
     // Initialize semaphores for producer-consumer
-    sema_init(&s_lock, 1);
-    sema_init(&s_full, 0);
-    sema_init(&s_empty, NSLOTS);
-    printf("semaphore initialized\n");
-    thread_create(consumer, "consumer 1", 16 * 1024);
-    producer("producer 1");
-
-    // TODO: other tests
+//    sema_init(&s_lock, 1);
+//    sema_init(&s_full, 0);
+//    sema_init(&s_empty, NSLOTS);
+//    printf("semaphore initialized\n");
+//    thread_create(consumer, "consumer 1", 16 * 1024);
+//    producer("producer 1");
+//
+//    // TODO: other tests
+//    return 0;
+    thread_init();
+    thread_create(test_code, "thread 1", 16 * 1024);
+    thread_create(test_code, "thread 2", 16 * 1024);
+    test_code("main thread");
     return 0;
 
 
