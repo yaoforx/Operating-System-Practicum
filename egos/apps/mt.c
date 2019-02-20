@@ -50,7 +50,11 @@ struct thread{
 
 };
 
-
+/**
+ * Monitor: Global struct to keep track of current running thread,
+ * ready queue, and exited thread queue
+ *
+ */
 struct monitor {
     struct thread *current_t;
     struct thread * next_t;
@@ -68,7 +72,7 @@ void ctx_entry(void);
 static struct thread* findRunnable();
 static int id;
 
-/*
+/**
  *  thread_init initializes the threading package
  */
 void thread_init(){
@@ -90,7 +94,7 @@ void thread_init(){
 
 }
 
-/*
+/**
  * thread_create creates a thread
  */
 void thread_create(void (*f)(void *arg), void *arg,
@@ -103,7 +107,6 @@ void thread_create(void (*f)(void *arg), void *arg,
     t->base = (address_t) &t->stack[STACKSIZE];
     t->arg = arg;
     t->state = READY;
-    printf("1Thread %d adding thread %d to ready queue\n", monitor->current_t->id, t->id);
     queue_add(monitor->thread_ready, t);
     thread_schedule();
 }
@@ -113,11 +116,15 @@ void ctx_entry(void) {
     /* Invoke the a new thread and call f(), exit()
 	 */
     monitor->current_t->state = STOPPED;
-    printf("2Thread %d adding thread %d to ready queue\n", monitor->current_t->id,  monitor->current_t->id);
-
+    /**
+     * Put stopped thread to ready queue
+     */
     queue_add(monitor->thread_ready, monitor->current_t);
     monitor->current_t = monitor->next_t;
     monitor->current_t->state = RUNNING;
+    /**
+     * Invoke f()
+     */
     (monitor->current_t->ip)(monitor->current_t->arg);
 
     thread_exit();
@@ -129,11 +136,13 @@ static void thread_schedule(){
     struct thread *old = monitor->current_t;
 
     monitor->next_t = findRunnable();
-    printf("Thread %d found a runnable thread %d\n", monitor->current_t->id, monitor->next_t->id);
-
-
+    /**
+     * If current thread is also next runnable thread, return
+     */
     if(old == monitor->next_t) return;
-
+    /**
+     * Schedule next runnable thread
+     */
     if(monitor->next_t->state == READY) {
         ctx_start(&(old->base), (monitor->next_t->base));
     } else if(monitor->next_t->state == STOPPED) {
@@ -150,11 +159,16 @@ static void thread_schedule(){
 
 }
 void thread_yield() {
+    /**
+     * If ready queue is empty and current thread is not runnable exit with 1
+     */
     if(queue_empty(monitor->thread_ready)) {
         if(monitor->current_t->state == TERMINATED || monitor->current_t->state == BLOCKED) sys_exit(1);
         else return;
     }
-
+    /**
+     * Clear the exited queue if current thread is runnable
+     */
     if(monitor->current_t->state != BLOCKED && monitor->current_t->state != TERMINATED) {
         struct thread * cur;
         while((cur = queue_get(monitor->thread_exited)) != NULL) {
@@ -163,17 +177,28 @@ void thread_yield() {
             free(cur);
         }
     }
+    /**
+     * Schedule for next runnable thread
+     */
     thread_schedule();
 
 }
 void thread_exit() {
+    /**
+     * Terminated current running thread, added to exited queue, schedule for next runnable thread
+     */
     monitor->current_t->state = TERMINATED;
     queue_add(monitor->thread_exited, monitor->current_t);
     thread_yield();
 
 }
+/**
+ * Helper function to find next runnable thread from ready queue
+ * @return a pointer to a runnable thread
+ */
 struct thread*
 findRunnable(){
+
     if(queue_empty(monitor->thread_ready)) {
         //printf("Ready queue is empty, return runnable %d\n",monitor->current_t->id);
 
@@ -185,7 +210,6 @@ findRunnable(){
     }
     struct thread *t1;
     t1 = queue_get(monitor->thread_ready);
-   // printf("Thread %d found a runnable thread %d\n", monitor->current_t->id, t1->id);
 
     return t1;
 }
@@ -202,8 +226,10 @@ struct sema {
     struct queue* queue_wait;
 };
 
-/*
- * sema_init
+/**
+ * sema_init for semaphores packages initialization
+ * @param sema
+ * @param count
  */
 void sema_init(struct sema *sema, unsigned int count) {
 
@@ -216,6 +242,11 @@ void sema_init(struct sema *sema, unsigned int count) {
     }
     sema->count = count;
 }
+/**
+ * sema_dec takes a pointer to sema, if count is positive, decrement its count
+ * otherwise wait for the count to incrementi
+ * @param sema
+ */
 
 void sema_dec(struct sema* sema){
     if(sema->count == 0){
@@ -227,7 +258,11 @@ void sema_dec(struct sema* sema){
     }
 
 }
-
+/**
+ * sema_inc takes a pointer to sema, if wait queue is not empty, put a thread to the ready queue
+ * otherwise increment its count
+ * @param sema
+ */
 void sema_inc(struct sema* sema) {
     struct thread *thread1;
 
