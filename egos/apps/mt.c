@@ -457,22 +457,22 @@ void eat_think(void * arg) {
         * If got both, ready to eat
         * otherwise wait.
         */
-        if (num == 4) {
-            sema_dec((forks + (num + 1) % 5));
+        if (num ==  number - 1) {
+            sema_dec((forks + (num + 1) % number));
             sema_dec(forks + num);
         } else {
             sema_dec(forks + num);
-            sema_dec((forks + (num + 1) % 5));
+            sema_dec((forks + (num + 1) %  number));
 
         }
         printf("%s has got his forks, started to eat...\n", arg);
         printf("%s has finished eating.\n",arg);
-        if (num == 4) {
-            sema_inc((forks + (num + 1) % 5));
+        if (num ==  number - 1) {
+            sema_inc((forks + (num + 1) %  number));
             sema_inc(forks + num);
         } else {
             sema_inc(forks + num);
-            sema_inc((forks + (num + 1) % 5));
+            sema_inc((forks + (num + 1) %  number));
         }
         /**
          * Humble thread yields each time
@@ -485,7 +485,7 @@ void eat_think(void * arg) {
 }
 void test_diningPhilosopher(){
     thread_init();
-    for(int i = 0; i < 5; i++) {
+    for(int i = 0; i < number; i++) {
         sema_init(&forks[i], 1);
     }
     times = 5;
