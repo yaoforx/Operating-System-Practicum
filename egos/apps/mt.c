@@ -178,7 +178,7 @@ void thread_yield() {
         else return;
     }
     /**
-     * Clear the exited queue if current thread is runnable
+     * Clear the exited queue and free their stacks if current thread is runnable
      */
     if(monitor->current_t->state != BLOCKED && monitor->current_t->state != TERMINATED) {
         struct thread * cur;
@@ -210,7 +210,7 @@ void thread_exit() {
 struct thread*
 findRunnable(){
     /**
-     * ready qyeye is empty means
+     * ready queue is empty means
      * either return current running thread
      * or whole program exits
      */
@@ -260,7 +260,7 @@ void sema_init(struct sema *sema, unsigned int count) {
 }
 /**
  * sema_dec takes a pointer to sema, if count is positive, decrement its count
- * otherwise wait for the count to incrementi
+ * otherwise wait for the count to increment
  * @param sema
  */
 
@@ -268,6 +268,7 @@ void sema_dec(struct sema* sema){
     if(sema->count == 0){
         monitor->current_t->state = BLOCKED;
         queue_add(sema->queue_wait, monitor->current_t);
+        
         thread_yield();
     } else {
         sema->count--;
@@ -387,14 +388,22 @@ void reader(void *arg){
          * so that writer can write
          */
         if (rcount == 0) {
+
+            sema_inc(&rcount_mutex);
             sema_inc(&readWrite_lock);
+	        thread_yield();
+
+        } else {
+            sema_inc(&rcount_mutex);
         }
-        sema_inc(&rcount_mutex);
+        //thread_yield();
+	}
         /**
          * Humble thread yields each time
          */
-        thread_yield();
-    }
+	
+//       thread_yield();
+
 }
 
 
@@ -429,6 +438,12 @@ void test_readWriteLock(){
     rcount = 0, times = 5;
     thread_create(reader, "reader 1", 16 * 1024);
     thread_create(reader, "reader 2", 16 * 1024);
+    thread_create(reader, "reader 3", 16 * 1024);
+    thread_create(reader, "reader 4", 16 * 1024);
+    thread_create(reader, "reader 5", 16 * 1024);
+    thread_create(reader, "reader 6", 16 * 1024);
+    thread_create(reader, "reader 7", 16 * 1024);
+
     writer("writer");
 }
 /**
@@ -512,9 +527,9 @@ int main(int argc, char **argv){
     printf("Test multi-reader locks\n");
     test_readWriteLock();
     printf("Test dining philosophers \n");
-    test_diningPhilosopher();
+   // test_diningPhilosopher();
     printf("Test consumer and producer\n");
-    test_producer();
+   // test_producer();
 
     return 0;
 

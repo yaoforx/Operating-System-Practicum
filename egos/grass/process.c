@@ -31,7 +31,8 @@
 #define PHYS_FRAMES		128			// #physical frames
 
 #define MAX_PROCS		100			// maximum #processes
-
+#define MAX_PRIORITY 3  //3 is lowest priority
+#define MILISEC 1000000
 /* The process that is currently running.  This variable is external
  * and can be used by other modules.
  */
@@ -40,7 +41,20 @@ struct process *proc_current;
 
 /* Run (aka ready) queue.
  */
+struct mtl_queue{
+    struct queue ** q;
+    int level;
+
+};
+static unsigned int quantum[MAX_PRIORITY];
+/**
+ * Current process expiring time
+ */
+static long expire;
+static struct mtl_queue *mtlQueue;
+
 static struct queue proc_runnable;
+
 
 
 /* A frame is a physical page.
@@ -74,7 +88,19 @@ static struct process *proc_next;			// next process to run after ctx switch
 static struct process proc_set[MAX_PROCS];	// set of all processes
 static bool_t proc_shutting_down;			// cleaning up
 static unsigned long proc_curfew;			// when to shut down
-
+/**
+ * Helper Function to update process's priority and quantum
+ * return true if this process has used up its quantum
+ */
+bool_t check_priority(struct process * current){
+    unsigned long now = sys_gettime();
+    if(expire <= now + current->remain_quantum) {
+        current->priority += (current->priority == 2) ? 0 : 1;
+        current->remain_quantum = quantum[current->priority];
+        return True;
+    }
+    return False;
+}
 
 static void proc_cleanup(){
 	printf("final clean up\n\r");
@@ -100,10 +126,17 @@ static void proc_cleanup(){
 
 	/* Release the run queue.
 	 */
+#ifdef HW_MLFQ
+    for(int i = 0; i < MAX_PRIORITY; i++) {
+        while (queue_get(mtlQueue->q[i]) != 0)
+            ;
+        queue_release(mtlQueue->q[i]);
+    }
+#else
 	while (queue_get(&proc_runnable) != 0)
 	 	;
 	queue_release(&proc_runnable);
-
+#endif
 	my_dump(False);		// print info about allocated memory
 }
 
@@ -125,6 +158,11 @@ static struct process *proc_alloc(gpid_t owner, char *descr, unsigned int uid){
 		return 0;
 	}
 	memset(p, 0, sizeof(*p));
+#ifdef HW_MLFQ
+    p->priority = 0;
+    p->remain_quantum = quantum[p->priority];
+#else
+#endif
 	p->pid = pid_gen++;
 	p->uid = uid;
 	p->owner = owner;
@@ -181,7 +219,12 @@ static void proc_release(struct process *proc){
  */
 static void proc_to_runqueue(struct process *p){
 	assert(p->state == PROC_RUNNABLE);
-	queue_add(&proc_runnable, p);
+#ifdef HW_MLFQ
+    queue_add((mtlQueue->q[p->priority]), p);
+
+#else
+    queue_add(&proc_runnable, p);
+#endif
 }
 
 /* Find a process by process id.
@@ -318,6 +361,10 @@ static void proc_wakeup(struct process *p){
 	proc_nrunnable++;
 	p->alarm_set = False;
 	if (p != proc_current) {
+        /**
+         * If the priority can be improved, improve it.
+         */
+        p->priority -= (p->priority == 0) ? 0 : 1;
 		proc_to_runqueue(p);
 	}
 	unsigned int i;
@@ -530,6 +577,7 @@ gpid_t proc_create_uid(gpid_t owner, char *descr, void (*start)(void *), void *a
 
 	proc->start = start;
 	proc->arg = arg;
+    proc->priority = 0;
 
 	/* Initialize the signal stack for first use.
 	 */
@@ -576,6 +624,8 @@ gpid_t proc_create(gpid_t owner, char *descr, void (*start)(void *), void *arg){
 /* Yield to another process.  This is basically the main scheduler.
  */
 void proc_yield(void){
+
+
 	/* See if there's any I/O to be done.
 	 */
 	intr_suspend(0);
@@ -610,15 +660,37 @@ void proc_yield(void){
 			}
 		}
 
-		/* See if there are other processes to run.  If so, we're done.
-		 */
-		while ((proc_next = queue_get(&proc_runnable)) != 0) {
-			if (proc_next->state == PROC_RUNNABLE) {
-				break;
-			}
-			assert(proc_next->state == PROC_ZOMBIE);
-			proc_release(proc_next);
-		}
+
+#ifdef HW_MLFQ
+        /**
+         * Find next runnable process according to its priority
+         */
+        for(int i = 0; i < MAX_PRIORITY; i++) {
+            while(proc_next = queue_get(mtlQueue->q[i]) != 0) {
+                if (proc_next->state == PROC_RUNNABLE) {
+                    break;
+                }
+                assert(proc_next->state == PROC_ZOMBIE);
+                proc_release(proc_next);
+            }
+            if (proc_next->state == PROC_RUNNABLE) {
+                proc_next->remain_quantum = quantum[proc_next->priority];
+                expire = now + proc_next->remain_quantum * MILISEC;
+                break;
+            }
+        }
+#else
+
+        /* See if there are other processes to run.  If so, we're done.
+         */
+        while ((proc_next = queue_get(&proc_runnable)) != 0) {
+            if (proc_next->state == PROC_RUNNABLE) {
+                break;
+            }
+            assert(proc_next->state == PROC_ZOMBIE);
+            proc_release(proc_next);
+        }
+#endif
 
 		/* There should always be at least one process.
 		 */
@@ -653,6 +725,7 @@ void proc_yield(void){
 	}
 
 
+
 	assert(proc_next != proc_current);
 	if (proc_next->pid == proc_current->pid) {
 		printf("==> %u\n\r", proc_current->pid);
@@ -682,6 +755,7 @@ void proc_yield(void){
 #endif
 
 	proc_after_switch();
+
 }
 
 #ifdef HW_PAGING	//<<<<HW_PAGING
@@ -915,8 +989,16 @@ void proc_got_interrupt(){
 		proc_syscall();
 		break;
 	case INTR_CLOCK:
-		proc_yield();
-		break;
+#ifdef HW_MLFQ
+        if(check_priority(proc_current)){
+            proc_yield();
+        }
+        break;
+#else
+        proc_yield();
+        break;
+#endif
+
 	case INTR_IO:
 		/* There might be a process that is now runnable.
 		 */
@@ -936,7 +1018,7 @@ void proc_dump(void){
 	printf("%u processes (current = %u, nrunnable = %u):\n\r",
 		proc_nprocs, proc_current->pid, proc_nrunnable);
 
-	printf("PID   DESCRIPTION  UID STATUS      OWNER ALARM   EXEC\n\r");
+	printf("PID   DESCRIPTION  UID STATUS      OWNER ALARM   EXEC     PRIORITY     QUANTUM\n\r");
 	for (p = proc_set; p < &proc_set[MAX_PROCS]; p++) {
 		if (p->state == PROC_FREE) {
 			continue;
@@ -980,6 +1062,11 @@ void proc_dump(void){
 		if (p->executable.server != 0) {
 			printf("   %u:%u", p->executable.server, p->executable.ino);
 		}
+#ifdef HW_MLFQ
+        printf("     %u", p->priority);
+        printf("     %u", p->remain_quantum);
+#else
+#endif
 		printf("\n\r");
 	}
 }
@@ -1019,6 +1106,7 @@ void proc_initialize(void){
 	}
 #endif //>>>>HW_PAGING
 
+
 	/* Initialize the free list of processes.
 	 */
 	queue_init(&proc_free);
@@ -1029,10 +1117,35 @@ void proc_initialize(void){
 
 	/* Initialize the run queue (aka ready queue).
 	 */
-	queue_init(&proc_runnable);
+//
+#ifdef HW_MLFQ
+    /**
+     * Intialize the priority queues;
+     * 0 is the highest priority
+     *
+     */
+    mtlQueue = malloc(sizeof(struct mtl_queue));
+    mtlQueue->level = MAX_PRIORITY;
+    mtlQueue->q = malloc(MAX_PRIORITY * sizeof(struct mtl_queue));
+    if(mtlQueue->q == NULL) {
+        perror("Multi-Level Queue Failed!\n");
+        sys_exit(1);
+    }
+    for (i = 0; i <mtlQueue->level; ++i)
+        mtlQueue->q[i] = NULL;
+     for(int i = 0; i < mtlQueue->level; i++) {
+         queue_init(mtlQueue->q[i]);
+         quantum[i] = (i + 1) * 10;
+     }
+    expire =  sys_gettime() + 1;
+
+#else
+    queue_init(&proc_runnable);
+#endif
 
 	/* Allocate a process record for the current process.
 	 */
+
 	proc_current = proc_alloc(1, "main", 0);
 }
 

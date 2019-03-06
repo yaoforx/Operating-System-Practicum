@@ -43,6 +43,11 @@ struct msg_queue {
 /* One of these per process.
  */
 struct process {
+#ifdef HW_MLFQ
+    int priority;
+    unsigned int remain_quantum;
+#else
+#endif
 	gpid_t pid;					// process identifier
 	char *descr;				// for dumps
 	void (*start)(void *);		// starting point
