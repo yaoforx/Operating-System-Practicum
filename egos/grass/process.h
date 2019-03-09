@@ -45,7 +45,10 @@ struct msg_queue {
 struct process {
 #ifdef HW_MLFQ
     int priority;
-    unsigned int remain_quantum;
+    unsigned long remain_quantum;
+    unsigned long start_time;
+    unsigned long last_run;
+    unsigned long term_time;
 #else
 #endif
 	gpid_t pid;					// process identifier
