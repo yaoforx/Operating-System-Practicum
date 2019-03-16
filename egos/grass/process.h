@@ -49,7 +49,10 @@ struct process {
     unsigned long start_time;
     unsigned long last_run;
     unsigned long term_time;
-#else
+#endif
+#ifdef HW_MEASURE
+    unsigned int yield_cnt;
+    unsigned int tick_cnt;
 #endif
 	gpid_t pid;					// process identifier
 	char *descr;				// for dumps

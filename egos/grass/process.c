@@ -35,6 +35,12 @@
 /* The process that is currently running.  This variable is external
  * and can be used by other modules.
  */
+/**
+ * HW_MLFQ defins global structures that will be used
+ * mtl_Queue has a 3 queues and a level representing its max priority
+ * quantum represents quantum time accordingly
+ *
+ */
 #ifdef HW_MLFQ
 #define MAX_PRIORITY 3  //2 is lowest priority
 
@@ -48,7 +54,12 @@ static unsigned int quantum[MAX_PRIORITY];
 static struct mtl_queue *mtlQueue;
 
 #endif
-
+/**
+ * HW_MEASURE defines struct ema that updates it load
+ */
+#ifdef HW_MEASURE
+struct ema_state ema;
+#endif
 struct process *proc_current;
 
 
@@ -122,13 +133,16 @@ static void proc_cleanup(){
      */
     while (queue_get(&proc_free) != 0)
         ;
-
+/**
+ * Clean up multi-level queues
+ */
 #ifdef HW_MLFQ
     for(int i = 0; i < MAX_PRIORITY; i++) {
         while(queue_get(mtlQueue->q[i]))
             ;
          queue_release(mtlQueue->q[i]);
     }
+    free(mtlQueue->q);
 #else
 
     /* Release the run queue.
@@ -159,7 +173,13 @@ static struct process *proc_alloc(gpid_t owner, char *descr, unsigned int uid){
         return 0;
     }
     memset(p, 0, sizeof(*p));
-
+    /**
+     * initialize tick_cnt and yield times count of a process
+     */
+#ifdef HW_MEASURE
+    p->tick_cnt = 0;
+    p->yield_cnt = 0;
+#endif
 
 
     p->pid = pid_gen++;
@@ -218,8 +238,11 @@ static void proc_release(struct process *proc){
  */
 static void proc_to_runqueue(struct process *p){
     assert(p->state == PROC_RUNNABLE);
+    /**
+     * Add process to the multi-level queue according to ites priority
+     */
 #ifdef HW_MLFQ
-    //printf("Added proc %lu to priority queue #%d\n", p->pid, p->priority);
+
     queue_add(mtlQueue->q[p->priority], p);
 #else
     queue_add(&proc_runnable, p);
@@ -384,7 +407,13 @@ void proc_term(struct process *proc, int status){
     if (proc->state == PROC_RUNNABLE) {
         proc_nrunnable--;
     }
-
+    /**
+     * Printf meta info about a terminated process
+     */
+#ifdef HW_MEASURE
+    unsigned long term = clock_now();
+    printf("Process %d died after %u ticks, %u yields, %lu miliseconds\n\r", proc->pid, proc->tick_cnt, proc->yield_cnt, (term - proc->start_time)/ 10000);
+#endif
     /* See if the owner is still around.
      */
     if (proc->state != PROC_ZOMBIE) {
@@ -575,6 +604,9 @@ gpid_t proc_create_uid(gpid_t owner, char *descr, void (*start)(void *), void *a
         fprintf(stderr, "proc_create_uid: out of memory\n");
         return 0;
     }
+    /**
+     * initialize a process's priority with zero(highest) and its remaining runtime
+     */
 #ifdef HW_MLFQ
     proc->priority = 0;
     proc->remain_quantum = quantum[proc->priority];
@@ -599,6 +631,9 @@ gpid_t proc_create_uid(gpid_t owner, char *descr, void (*start)(void *), void *a
     /* Start the new process, which commences at ctx_entry();
      */
     proc_next = proc;
+    /**
+     * Update a process the last runtime
+     */
 #ifdef HW_MLFQ
     unsigned long now = sys_gettime();
     proc->last_run = now;
@@ -667,16 +702,17 @@ void proc_yield(void){
                 }
             }
         }
-
+/**
+* Find next runnable process according to its priority
+*/
 #ifdef HW_MLFQ
-        /**
-         * Find next runnable process according to its priority
-         */
+
 
         for(int i = 0; i < MAX_PRIORITY; i++) {
             while((proc_next = queue_get(mtlQueue->q[i])) != 0) {
                 if (proc_next->state == PROC_RUNNABLE) {
-                    goto PROC_NEXT_FOUND;
+                   goto PROC_NEXT_FOUND;
+
                 }
                 assert(proc_next->state == PROC_ZOMBIE);
                 proc_release(proc_next);
@@ -729,6 +765,13 @@ void proc_yield(void){
         /* No luck.  We'll wait for a while.
          */
         intr_suspend(next - now);
+        /**
+         * Update ema average based on runnable processes
+         */
+#ifdef HW_MEASURE
+
+        ema_update(&ema, proc_nrunnable);
+#endif
 
     }
 
@@ -751,12 +794,19 @@ void proc_yield(void){
         printf("proc_yield: switch from %u to %u next\n", proc_current->pid, proc_next->pid);
     }
 
+
+/**
+ * Update a process last run time
+ * and its number of yield counts
+ */
 #ifdef HW_MLFQ
     unsigned long now = sys_gettime();
     proc_next->last_run = now;
 
 #endif
-
+#ifdef HW_MEASURE
+    proc_current->yield_cnt += 1;
+#endif
 
 #ifdef NO_UCONTEXT
     ctx_switch(&proc_current->kernel_sp, proc_next->kernel_sp);
@@ -993,6 +1043,9 @@ void proc_pagefault(address_t virt){
 /* Entry point for all interrupts.
  */
 void proc_got_interrupt(){
+    /**
+     * Update a process's priority if possible
+     */
 #ifdef HW_MLFQ
     check_priority(proc_current);
 #endif
@@ -1004,6 +1057,14 @@ void proc_got_interrupt(){
             proc_syscall();
             break;
         case INTR_CLOCK:
+            /**
+             * update clock tick time and ema average
+             */
+#ifdef HW_MEASURE
+            proc_current->tick_cnt += 1;
+
+            ema_update(&ema, proc_nrunnable);
+#endif
             proc_yield();
             break;
         case INTR_IO:
@@ -1022,10 +1083,18 @@ void proc_dump(void){
     struct process *p;
 
     printf("\n\r");
+    /**
+     * update ema average and print to screen
+    */
+#ifdef HW_MEASURE
+    double ema_average = ema_avg(&ema);
+    printf("%u processes (current = %u, nrunnable = %u, load = %.2f ):\n\r",
+           proc_nprocs, proc_current->pid, proc_nrunnable, ema_average);
+#else
     printf("%u processes (current = %u, nrunnable = %u):\n\r",
            proc_nprocs, proc_current->pid, proc_nrunnable);
-
-    printf("PID   DESCRIPTION  UID STATUS      OWNER ALARM   EXEC\n\r");
+#endif
+    printf("PID   DESCRIPTION  UID STATUS      OWNER ALARM   EXEC  PRIORITY  REMAIN\n\r");
     for (p = proc_set; p < &proc_set[MAX_PROCS]; p++) {
         if (p->state == PROC_FREE) {
             continue;
@@ -1069,6 +1138,10 @@ void proc_dump(void){
         if (p->executable.server != 0) {
             printf("   %u:%u", p->executable.server, p->executable.ino);
         }
+#ifdef HW_MLFQ
+        printf("       %d", p->priority);
+        printf("            %d", p->remain_quantum);
+#endif
         printf("\n\r");
     }
 }
@@ -1115,7 +1188,9 @@ void proc_initialize(void){
         proc_set[i].pid = i;
         queue_add(&proc_free, &proc_set[i]);
     }
-
+/**
+ * muti-level queues initialization
+ */
 #ifdef HW_MLFQ
     /**
      * Intialize the priority queues;
@@ -1144,9 +1219,13 @@ void proc_initialize(void){
     queue_init(&proc_runnable);
 #endif
 
+
     /* Allocate a process record for the current process.
      */
     proc_current = proc_alloc(1, "main", 0);
+#ifdef HW_MEASURE
+    ema_init(&ema, 0.01);
+#endif
 }
 
 /* Invoked when shutting down the kernel.

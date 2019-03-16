@@ -3,7 +3,7 @@ SNAME := $(shell ./sname)
 GRASS_DIR = .
 include Makefile.$(SNAME)
 
-CFLAGS = -c -g $(XFLAGS) -DGRASS -D_XOPEN_SOURCE -Wall -Wsign-compare -DHW_MLFQ -DHW_MEASURE -DHW_PAGING
+CFLAGS = -c -g $(XFLAGS) -DGRASS -D_XOPEN_SOURCE -Wall -DHW_MLFQ -Wsign-compare -DHW_MEASURE -DHW_PAGING
 
 EARTH_SRCS = earth/clock.c earth/devdisk.c earth/devtty.c earth/devudp.c earth/intr.c earth/log.c earth/mem.c earth/myalloc.c earth/prot.c earth/tlb.c
 GRASS_SRCS = grass/blocksvr.c grass/dirsvr.c grass/disksvr.c grass/blkfilesvr.c grass/main.c grass/process.c grass/procsys.c grass/ramfilesvr.c grass/spawnsvr.c grass/ttysvr.c
