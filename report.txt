@@ -1,0 +1,36 @@
+Experiment with script.bat has been run.
+With HW_MLFQ undefined
+the sequential commands:
+loop 1000000000
+loop 1000000000
+are running sequentially, which means after the first loop command returned, the second command was invoked.
+the concurrent commands:
+loop 1000000000&
+loop 1000000000&
+are also running sequentially, which means after the first loop command returned, the second command was invoked.
+However, with HW_MLFQ defined:
+the sequential commands:
+loop 1000000000
+loop 1000000000
+are running sequentially as HW_MLFQ undefined.
+the concurrent commands:
+loop 1000000000&
+loop 1000000000&
+perform differently, they started to run almost the same time with an instant interval.
+This phenomenon is expected. Because with the implemented multi-level feedback queues, the process will be interrupted by a clock based on its priority, which allows different processes can be switched off and on based on its priority, prevent obvious blocking(A process occupies CPU too long).
+
+User-defined script.bat
+We have also tried several built-in commands.
+Command 1:
+loop 1000000000
+cat
+These commands were running sequentially with or without Multi-level feedback queues.
+However
+Command 2:
+loop 1000000000&
+cat
+These commands were running almost concurrently, which means cat command can directly response to input without waiting for loop to end.
+This phenomenon is expected. As illustrated above, multi-feedback queues are able to schedule processes according to its priority, reduce the overheads of waiting some processes to end to be able to continue the next one.
+
+
+

@@ -378,10 +378,10 @@ void reader(void *arg){
          */
 
         sema_inc(&rcount_mutex);
-        printf("%s is successfully reading.\n", arg);
+      //  printf("%s is successfully reading.\n", arg);
         sema_dec(&rcount_mutex);
         rcount -= 1;
-        printf("%s just has finished this reading.\n", arg);
+      //  printf("%s just has finished this reading.\n", arg);
         /**
          * if rcount is 0, no one is reading,
          * release the writer lock
@@ -417,8 +417,8 @@ void writer(void *arg){
          *  successfully got writer lock
          *  perform writing
          */
-        printf("%s has gotten a chance to write.\n",arg);
-        printf("%s has finished writing.\n", arg);
+      //  printf("%s has gotten a chance to write.\n",arg);
+       // printf("%s has finished writing.\n", arg);
         /**
          * finished writing, release writer lock
          */

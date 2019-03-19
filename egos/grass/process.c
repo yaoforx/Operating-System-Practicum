@@ -711,17 +711,15 @@ void proc_yield(void){
         for(int i = 0; i < MAX_PRIORITY; i++) {
             while((proc_next = queue_get(mtlQueue->q[i])) != 0) {
                 if (proc_next->state == PROC_RUNNABLE) {
-                   goto PROC_NEXT_FOUND;
-
+                   break;
                 }
                 assert(proc_next->state == PROC_ZOMBIE);
                 proc_release(proc_next);
             }
+            if (proc_next != 0 && proc_next->state == PROC_RUNNABLE) {
+                   break;
+            }
         }
-
-        proc_next = NULL;
-
-        PROC_NEXT_FOUND:
 
 
 #else
@@ -1138,6 +1136,9 @@ void proc_dump(void){
         if (p->executable.server != 0) {
             printf("   %u:%u", p->executable.server, p->executable.ino);
         }
+        /**
+         * Print statement for process's priority and remaining quantum
+         */
 #ifdef HW_MLFQ
         printf("       %d", p->priority);
         printf("            %d", p->remain_quantum);
