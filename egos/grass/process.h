@@ -43,6 +43,13 @@ struct msg_queue {
 /* One of these per process.
  */
 struct process {
+	/***
+	 * Fields that are defined if HW_MLFQ specified
+	 * remain_quantum: the remaining quantum that can be ussed for thie process
+	 * start_time: process's start time
+	 * last_run: the latest start time
+	 * term_time: termination time
+	 */
 #ifdef HW_MLFQ
     int priority;
     unsigned long remain_quantum;
@@ -50,6 +57,11 @@ struct process {
     unsigned long last_run;
     unsigned long term_time;
 #endif
+    /**
+     * Fields that are defined if HW_MLFQ specified
+     * yield_cnt: number of actual yields this process has performed
+     * tick_cnt: clock tick has performed
+     */
 #ifdef HW_MEASURE
     unsigned int yield_cnt;
     unsigned int tick_cnt;

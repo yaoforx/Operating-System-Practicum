@@ -712,6 +712,7 @@ void proc_yield(void){
             while((proc_next = queue_get(mtlQueue->q[i])) != 0) {
                 if (proc_next->state == PROC_RUNNABLE) {
                    break;
+                  // goto PROC_NEXT_FOUND;
                 }
                 assert(proc_next->state == PROC_ZOMBIE);
                 proc_release(proc_next);
@@ -720,6 +721,8 @@ void proc_yield(void){
                    break;
             }
         }
+       // proc_next = NULL;
+       // PROC_NEXT_FOUND:
 
 
 #else
@@ -802,6 +805,9 @@ void proc_yield(void){
     proc_next->last_run = now;
 
 #endif
+    /**
+     * This process is able to yield, increase the yield count
+     */
 #ifdef HW_MEASURE
     proc_current->yield_cnt += 1;
 #endif
@@ -1141,7 +1147,7 @@ void proc_dump(void){
          */
 #ifdef HW_MLFQ
         printf("       %d", p->priority);
-        printf("            %d", p->remain_quantum);
+        printf("            %lu", p->remain_quantum);
 #endif
         printf("\n\r");
     }

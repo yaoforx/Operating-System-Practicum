@@ -39,9 +39,27 @@
       <file leaf-file-name="process.c" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/grass/process.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="310">
-              <caret line="713" column="25" lean-forward="false" selection-start-line="713" selection-start-column="25" selection-end-line="713" selection-end-column="25" />
-              <folding />
+            <state relative-caret-position="258">
+              <caret line="722" column="9" lean-forward="true" selection-start-line="722" selection-start-column="9" selection-end-line="722" selection-end-column="9" />
+              <folding>
+                <element signature="e#21373#21438#0" expanded="true" />
+                <element signature="e#21548#21577#0" expanded="true" />
+                <element signature="e#21609#21668#0" expanded="true" />
+                <element signature="e#31421#31508#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="process.h" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/grass/process.h">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="4">
+              <caret line="50" column="34" lean-forward="false" selection-start-line="50" selection-start-column="34" selection-end-line="50" selection-end-column="34" />
+              <folding>
+                <element signature="e#1201#1335#0" expanded="true" />
+                <element signature="e#1544#1594#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -108,7 +126,6 @@
       <find>priority</find>
       <find>PROC_YIELD</find>
       <find>HW_MLFQ</find>
-      <find>proc_yield</find>
       <find>mtlQueue</find>
       <find>proc_wake</find>
       <find>swapcontext</find>
@@ -123,13 +140,14 @@
       <find>proc_du</find>
       <find>HW_MEASURE</find>
       <find>Load the</find>
-      <find>yield_cnt</find>
       <find>load</find>
       <find>proc_nrunnable</find>
       <find>ema_update</find>
       <find>ema_aver</find>
       <find>proc_clean</find>
       <find>print</find>
+      <find>yield_cnt</find>
+      <find>proc_yield</find>
     </findStrings>
   </component>
   <component name="IdeDocumentHistory">
@@ -144,13 +162,13 @@
         <option value="$PROJECT_DIR$/shared/asm_linux_x86_32.s" />
         <option value="$PROJECT_DIR$/shared/context.h" />
         <option value="$PROJECT_DIR$/Makefile" />
-        <option value="$PROJECT_DIR$/grass/process.h" />
         <option value="$PROJECT_DIR$/shared/ema.c" />
         <option value="$PROJECT_DIR$/apps/extra_mlfq.cpp" />
         <option value="$PROJECT_DIR$/apps/loop.c" />
         <option value="$PROJECT_DIR$/apps/exhaust.cpp" />
         <option value="$PROJECT_DIR$/apps/mt.c" />
         <option value="$PROJECT_DIR$/script.bat" />
+        <option value="$PROJECT_DIR$/grass/process.h" />
         <option value="$PROJECT_DIR$/grass/process.c" />
       </list>
     </option>
@@ -296,14 +314,16 @@
       <workItem from="1552785285645" duration="2036000" />
       <workItem from="1552964219818" duration="3993000" />
       <workItem from="1553012317792" duration="556000" />
+      <workItem from="1553029349276" duration="910000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="137364000" />
+    <option name="totallyTimeSpent" value="138274000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1440" height="782" extended-state="6" />
+    <frame x="0" y="23" width="1440" height="783" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23185341" sideWeight="0.8339844" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -312,7 +332,7 @@
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2547307" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.056686047" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.23185341" sideWeight="0.16601562" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -536,24 +556,13 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/grass/process.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="969">
-          <caret line="51" column="6" lean-forward="false" selection-start-line="51" selection-start-column="6" selection-end-line="51" selection-end-column="6" />
-          <folding>
-            <element signature="e#959#1093#0" expanded="true" />
-            <element signature="e#1123#1173#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/grass/main.c">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="7353">
           <caret line="387" column="15" lean-forward="false" selection-start-line="387" selection-start-column="7" selection-end-line="387" selection-end-column="15" />
           <folding>
-            <element signature="e#0#21#0" expanded="true" />
-            <element signature="e#665#685#0" expanded="true" />
+            <element signature="e#0#21#0" expanded="false" />
+            <element signature="e#665#685#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -670,7 +679,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="273">
           <caret line="52" column="45" lean-forward="false" selection-start-line="52" selection-start-column="45" selection-end-line="52" selection-end-column="45" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -678,7 +686,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -686,7 +693,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="133">
           <caret line="7" column="21" lean-forward="false" selection-start-line="7" selection-start-column="21" selection-end-line="7" selection-end-column="21" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -698,11 +704,27 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/grass/process.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4">
+          <caret line="50" column="34" lean-forward="false" selection-start-line="50" selection-start-column="34" selection-end-line="50" selection-end-column="34" />
+          <folding>
+            <element signature="e#1201#1335#0" expanded="true" />
+            <element signature="e#1544#1594#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/grass/process.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="310">
-          <caret line="713" column="25" lean-forward="false" selection-start-line="713" selection-start-column="25" selection-end-line="713" selection-end-column="25" />
-          <folding />
+        <state relative-caret-position="258">
+          <caret line="722" column="9" lean-forward="true" selection-start-line="722" selection-start-column="9" selection-end-line="722" selection-end-column="9" />
+          <folding>
+            <element signature="e#21373#21438#0" expanded="true" />
+            <element signature="e#21548#21577#0" expanded="true" />
+            <element signature="e#21609#21668#0" expanded="true" />
+            <element signature="e#31421#31508#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
