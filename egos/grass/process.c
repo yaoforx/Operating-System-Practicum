@@ -412,7 +412,7 @@ void proc_term(struct process *proc, int status){
      */
 #ifdef HW_MEASURE
     unsigned long term = clock_now();
-    printf("Process %d died after %u ticks, %u yields, %lu miliseconds\n\r", proc->pid, proc->tick_cnt, proc->yield_cnt, (term - proc->start_time)/ 10000);
+    printf("Process %d died after %u ticks, %u yields, %lu miliseconds\n\r", proc->pid, proc->tick_cnt, proc->yield_cnt, (term - proc->start_time)/ 10);
 #endif
     /* See if the owner is still around.
      */
@@ -712,7 +712,6 @@ void proc_yield(void){
             while((proc_next = queue_get(mtlQueue->q[i])) != 0) {
                 if (proc_next->state == PROC_RUNNABLE) {
                    break;
-                  // goto PROC_NEXT_FOUND;
                 }
                 assert(proc_next->state == PROC_ZOMBIE);
                 proc_release(proc_next);
@@ -721,8 +720,6 @@ void proc_yield(void){
                    break;
             }
         }
-       // proc_next = NULL;
-       // PROC_NEXT_FOUND:
 
 
 #else

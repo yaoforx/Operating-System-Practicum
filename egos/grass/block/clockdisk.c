@@ -21,12 +21,14 @@
 
 /* Per block in the cache we keep track of the following info:
  */
+void clockdisk_dump_stats(block_if bi);
+enum status{
+    BI_EMPTY,			// cache entry not in use
+    BI_UNUSED,			// in use, but not recently used (stale)
+    BI_USED				// recently used
+};
 struct block_info {
-	enum {
-		BI_EMPTY,			// cache entry not in use
-		BI_UNUSED,			// in use, but not recently used (stale)
-		BI_USED				// recently used
-	} status;
+	enum status status;
 	block_no offset;		// block being cached if not BI_EMPTY
 };
 
@@ -49,9 +51,49 @@ struct clockdisk_state {
  * algorithm to find an entry that hasn't been used recently, evict any
  * block in it, and stick the block in the entry.
  */
-static void cache_update(struct clockdisk_state *cs, block_no offset, block_t *block) {
+static void  cache_update(struct clockdisk_state *cs, block_no offset, block_t *block) {
 	/* Your code goes here:
 	 */
+    /**
+     * we don't want the clock_hand to become too big, set to zero if needed(start over)
+     */
+    if(cs->clock_hand >1000 * cs->nblocks) cs->clock_hand = 0;
+    unsigned int cnt = 0;
+    /**
+     * Only go one-round clock
+     * break if finish one round
+     */
+    while(cnt < cs->nblocks) {
+        unsigned int i = cs->clock_hand % cs->nblocks;
+        if (cs->binfo[i].status != BI_USED) {
+            /**
+             * Found an empty/not in use cache block
+             * set it to USED
+             */
+            cs->binfo[i].status = BI_USED;
+           /**
+            * copy what is on the disk to cache
+            * and update its offset
+            */
+            cs->binfo[i].offset = offset;
+            memcpy(&cs->blocks[i], block, sizeof(block_t));
+            cs->clock_hand++;
+            return;
+
+        } else if(cs->binfo[i].status == BI_USED) {
+            //set to not used recently
+            cs->binfo[i].status = BI_UNUSED;
+        }
+        // move to the next cache block
+        cs->clock_hand++;
+        cnt++;
+    }
+
+
+
+
+
+
 }
 
 static int clockdisk_nblocks(block_if bi){
@@ -72,22 +114,85 @@ static int clockdisk_setsize(block_if bi, block_no nblocks){
 	return (*cs->below->setsize)(cs->below, nblocks);
 }
 
-static int clockdisk_read(block_if bi, block_no offset, block_t *block){
-	/* Your code should replace this naive implementation
-	 */
-	struct clockdisk_state *cs = bi->state;
+
+static int clockdisk_read(block_if bi, block_no offset, block_t *block) {
+    /* Your code should replace this naive implementation
+     */
+//	struct clockdisk_state *cs = bi->state;
+//
+//
+//	int r = (*cs->below->read)(cs->below, offset, block);
+//	return r;
+
+    struct clockdisk_state *cs = bi->state;
+    unsigned int i = 0;
+    for (; i < cs->nblocks; ++i) {
+        if (cs->binfo[i].offset == offset && cs->binfo[i].status != BI_EMPTY) {
+            /**
+             * Found the desired cache
+             */
+            cs->binfo[i].status = BI_USED;
+            ++cs->read_hit;
+            /**
+             * Copy cache to block(for return)
+             */
+            memcpy(block, &cs->blocks[i], sizeof(block_t));
 
 
-	int r = (*cs->below->read)(cs->below, offset, block);
-	return r;
+            return 0;
+
+        }
+    }
+    /**
+     * We don't find any cache
+     */
+    cs->read_miss++;
+    if((cs->read_miss + cs->write_miss)%20 == 0) {
+        clockdisk_dump_stats(bi);
+    }
+    /**
+     * Read from disk and update the cache if needed
+     */
+    int r = (*cs->below->read)(cs->below, offset, block);
+    cache_update(cs, offset, block);
+    return r;
+
+
 }
 
 static int clockdisk_write(block_if bi, block_no offset, block_t *block){
 	/* Your code should replace this naive implementation
 	 */
 	
-	struct clockdisk_state *cs = bi->state;
-	return (*cs->below->write)(cs->below, offset, block);
+//	struct clockdisk_state *cs = bi->state;
+//	return (*cs->below->write)(cs->below, offset, block);
+    struct clockdisk_state *cs = bi->state;
+    unsigned int i = 0;
+    for(;i < cs->nblocks;++i ) {
+        if(cs->binfo[i].offset == offset && cs->binfo[i].status != BI_EMPTY) {
+            break;
+        }
+
+    }
+    int r = (*cs->below->write)(cs->below, offset, block);
+
+    if(i == cs->nblocks) {
+        //cache miss
+        ++cs->write_miss;
+        if((cs->read_miss + cs->write_miss)%20 == 0) {
+            clockdisk_dump_stats(bi);
+        }
+        cache_update(cs, offset, block);
+    } else {
+        //cache hit
+        ++cs->write_hit;
+        //copy disk version to cache
+        memcpy(&cs->blocks[i], block, sizeof(block_t));
+    }
+    return r;
+
+
+
 }
 
 static void clockdisk_destroy(block_if bi){
@@ -101,10 +206,10 @@ static void clockdisk_destroy(block_if bi){
 void clockdisk_dump_stats(block_if bi){
 	struct clockdisk_state *cs = bi->state;
 
-	printf("!$CLOCK: #read hits:    %u\n", cs->read_hit);
-	printf("!$CLOCK: #read misses:  %u\n", cs->read_miss);
-	printf("!$CLOCK: #write hits:   %u\n", cs->write_hit);
-	printf("!$CLOCK: #write misses: %u\n", cs->write_miss);
+	printf("!$CLOCK: #read hits:    %u\n\r", cs->read_hit);
+	printf("!$CLOCK: #read misses:  %u\n\r", cs->read_miss);
+	printf("!$CLOCK: #write hits:   %u\n\r", cs->write_hit);
+	printf("!$CLOCK: #write misses: %u\n\r", cs->write_miss);
 }
 
 /* Create a new block store module on top of the specified module below.
