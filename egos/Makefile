@@ -20,6 +20,9 @@ all: a.out
 a.out: $(OBJS)
 	$(CC) $(OBJS) -lm
 
+cache_test:
+	make -f Makefile.cache_test
+
 grass/%.o: shared/%.c
 	$(CC) -Ishared -Igrass $(CFLAGS) $< -o $@
 

@@ -1959,6 +1959,87 @@ shared/spawn.c.s:
 	$(MAKE) -f CMakeFiles/egos.dir/build.make CMakeFiles/egos.dir/shared/spawn.c.s
 .PHONY : shared/spawn.c.s
 
+test/cache_test/block_store.o: test/cache_test/block_store.c.o
+
+.PHONY : test/cache_test/block_store.o
+
+# target to build an object file
+test/cache_test/block_store.c.o:
+	$(MAKE) -f CMakeFiles/egos.dir/build.make CMakeFiles/egos.dir/test/cache_test/block_store.c.o
+.PHONY : test/cache_test/block_store.c.o
+
+test/cache_test/block_store.i: test/cache_test/block_store.c.i
+
+.PHONY : test/cache_test/block_store.i
+
+# target to preprocess a source file
+test/cache_test/block_store.c.i:
+	$(MAKE) -f CMakeFiles/egos.dir/build.make CMakeFiles/egos.dir/test/cache_test/block_store.c.i
+.PHONY : test/cache_test/block_store.c.i
+
+test/cache_test/block_store.s: test/cache_test/block_store.c.s
+
+.PHONY : test/cache_test/block_store.s
+
+# target to generate assembly for a file
+test/cache_test/block_store.c.s:
+	$(MAKE) -f CMakeFiles/egos.dir/build.make CMakeFiles/egos.dir/test/cache_test/block_store.c.s
+.PHONY : test/cache_test/block_store.c.s
+
+test/cache_test/trace.o: test/cache_test/trace.c.o
+
+.PHONY : test/cache_test/trace.o
+
+# target to build an object file
+test/cache_test/trace.c.o:
+	$(MAKE) -f CMakeFiles/egos.dir/build.make CMakeFiles/egos.dir/test/cache_test/trace.c.o
+.PHONY : test/cache_test/trace.c.o
+
+test/cache_test/trace.i: test/cache_test/trace.c.i
+
+.PHONY : test/cache_test/trace.i
+
+# target to preprocess a source file
+test/cache_test/trace.c.i:
+	$(MAKE) -f CMakeFiles/egos.dir/build.make CMakeFiles/egos.dir/test/cache_test/trace.c.i
+.PHONY : test/cache_test/trace.c.i
+
+test/cache_test/trace.s: test/cache_test/trace.c.s
+
+.PHONY : test/cache_test/trace.s
+
+# target to generate assembly for a file
+test/cache_test/trace.c.s:
+	$(MAKE) -f CMakeFiles/egos.dir/build.make CMakeFiles/egos.dir/test/cache_test/trace.c.s
+.PHONY : test/cache_test/trace.c.s
+
+test/cache_test/tracedisk.o: test/cache_test/tracedisk.c.o
+
+.PHONY : test/cache_test/tracedisk.o
+
+# target to build an object file
+test/cache_test/tracedisk.c.o:
+	$(MAKE) -f CMakeFiles/egos.dir/build.make CMakeFiles/egos.dir/test/cache_test/tracedisk.c.o
+.PHONY : test/cache_test/tracedisk.c.o
+
+test/cache_test/tracedisk.i: test/cache_test/tracedisk.c.i
+
+.PHONY : test/cache_test/tracedisk.i
+
+# target to preprocess a source file
+test/cache_test/tracedisk.c.i:
+	$(MAKE) -f CMakeFiles/egos.dir/build.make CMakeFiles/egos.dir/test/cache_test/tracedisk.c.i
+.PHONY : test/cache_test/tracedisk.c.i
+
+test/cache_test/tracedisk.s: test/cache_test/tracedisk.c.s
+
+.PHONY : test/cache_test/tracedisk.s
+
+# target to generate assembly for a file
+test/cache_test/tracedisk.c.s:
+	$(MAKE) -f CMakeFiles/egos.dir/build.make CMakeFiles/egos.dir/test/cache_test/tracedisk.c.s
+.PHONY : test/cache_test/tracedisk.c.s
+
 tools/cpr.o: tools/cpr.c.o
 
 .PHONY : tools/cpr.o
@@ -2253,6 +2334,15 @@ help:
 	@echo "... shared/spawn.o"
 	@echo "... shared/spawn.i"
 	@echo "... shared/spawn.s"
+	@echo "... test/cache_test/block_store.o"
+	@echo "... test/cache_test/block_store.i"
+	@echo "... test/cache_test/block_store.s"
+	@echo "... test/cache_test/trace.o"
+	@echo "... test/cache_test/trace.i"
+	@echo "... test/cache_test/trace.s"
+	@echo "... test/cache_test/tracedisk.o"
+	@echo "... test/cache_test/tracedisk.i"
+	@echo "... test/cache_test/tracedisk.s"
 	@echo "... tools/cpr.o"
 	@echo "... tools/cpr.i"
 	@echo "... tools/cpr.s"

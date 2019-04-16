@@ -1,0 +1,174 @@
+Correctness Test 1:
+W:-1:0
+W:-1:0
+W:1:0
+R:-1:0
+R:1:0
+R:1:0
+N:-1:1
+N:-1:0
+S:-1:0
+According to convention, negative inode number should not be recognized. However, after ran correctness test 1:
+$ ./trace trace1.txt
+blocksize:  512
+refs/block: 128
+inode number too large
+!$CLOCK: #read hits:    0
+!$CLOCK: #read misses:  0
+!$CLOCK: #write hits:   0
+!$CLOCK: #write misses: 0
+!$STAT: #nnblocks:  0
+!$STAT: #nsetsize:  0
+!$STAT: #nread:     0
+!$STAT: #nwrite:    0
+
+We can see that negative inode number has not been supported correctly. We should throw exception when having negative inode number.
+
+Correctness Test 2:
+W:126:0
+R:126:0
+W:127:0
+R:127:0
+
+./trace trace2.txt
+blocksize:  512
+refs/block: 128
+!$CLOCK: #read hits:    13
+!$CLOCK: #read misses:  3
+!$CLOCK: #write hits:   6
+!$CLOCK: #write misses: 2
+!$STAT: #nnblocks:  0
+!$STAT: #nsetsize:  0
+!$STAT: #nread:     3
+!$STAT: #nwrite:    8
+
+W:126:0
+R:126:0
+W:127:0
+R:127:0
+S:128:0
+N:128:2
+
+./trace trace2.txt
+blocksize:  512
+refs/block: 128
+inode number too large
+!$CLOCK: #read hits:    13
+!$CLOCK: #read misses:  3
+!$CLOCK: #write hits:   6
+!$CLOCK: #write misses: 2
+!$STAT: #nnblocks:  0
+!$STAT: #nsetsize:  0
+!$STAT: #nread:     3
+!$STAT: #nwrite:    8
+
+After inode number exceeds 128, the maximum inode number, a warning has displayed. Program can correctly display warning when inode number exceeds 128.
+
+Correctness Test 3:
+W:0:134217728
+
+./trace trace3.txt
+blocksize:  512
+refs/block: 128
+block number too large
+!$CLOCK: #read hits:    0
+!$CLOCK: #read misses:  0
+!$CLOCK: #write hits:   0
+!$CLOCK: #write misses: 0
+!$STAT: #nnblocks:  0
+!$STAT: #nsetsize:  0
+!$STAT: #nread:     0
+!$STAT: #nwrite:    0
+
+W:0:134217727
+R:0:134217727
+
+./trace trace3.txt
+blocksize:  512
+refs/block: 128
+!$CLOCK: #read hits:    17
+!$CLOCK: #read misses:  3
+!$CLOCK: #write hits:   10
+!$CLOCK: #write misses: 8
+!$STAT: #nnblocks:  0
+!$STAT: #nsetsize:  0
+!$STAT: #nread:     3
+!$STAT: #nwrite:    18
+
+After exceeding offset of 134217727(1 << 27), warining has displayed.
+
+Performace Test 1:
+sequentially read/write in a single large file
+W:0:0
+W:0:1
+W:0:2
+W:0:3
+W:0:4
+W:0:5
+W:0:6
+
+./trace trace4.txt
+blocksize:  512
+refs/block: 128
+!$CLOCK: #read hits:    27
+!$CLOCK: #read misses:  3
+!$CLOCK: #write hits:   22
+!$CLOCK: #write misses: 8
+!$STAT: #nnblocks:  0
+!$STAT: #nsetsize:  0
+!$STAT: #nread:     3
+!$STAT: #nwrite:    30
+
+Performance Test 2:
+randomly read/write in a single large file
+W:1:143
+W:1:4452
+W:1:23
+W:1:76586
+W:1:23
+W:1:45645
+W:1:4
+W:1:1
+
+./trace trace5.txt
+blocksize:  512
+refs/block: 128
+!$CLOCK: #read hits:    46
+!$CLOCK: #read misses:  3
+!$CLOCK: #write hits:   27
+!$CLOCK: #write misses: 16
+!$STAT: #nnblocks:  0
+!$STAT: #nsetsize:  0
+!$STAT: #nread:     3
+!$STAT: #nwrite:    43
+
+Performance Test 3:
+interleaving read/write of different files
+
+W:3:143
+W:13:4452
+W:1:23
+W:7:76586
+W:6:23
+W:2:45645
+W:5:4
+W:10:1
+
+./trace trace6.txt
+blocksize:  512
+refs/block: 128
+!$CLOCK: #read hits:    33
+!$CLOCK: #read misses:  4
+!$CLOCK: #write hits:   24
+!$CLOCK: #write misses: 16
+!$CLOCK: #read hits:    63
+!$CLOCK: #read misses:  5
+!$CLOCK: #write hits:   44
+!$CLOCK: #write misses: 28
+!$STAT: #nnblocks:  0
+!$STAT: #nsetsize:  0
+!$STAT: #nread:     5
+!$STAT: #nwrite:    72
+
+We can see from the logs that sequentially read/write in a single file has the highest performance: lowest misses and maximum hits. Randomly access a single file will presentokay performance. Interleavingly read/write different files has the lowest performance.
+

@@ -398,6 +398,15 @@
 		<Unit filename="/Users/yaoxiao/CS4411/egos/shared/syscall.h">
 			<Option target="egos"/>
 		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/test/cache_test/block_store.c">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/test/cache_test/trace.c">
+			<Option target="egos"/>
+		</Unit>
+		<Unit filename="/Users/yaoxiao/CS4411/egos/test/cache_test/tracedisk.c">
+			<Option target="egos"/>
+		</Unit>
 		<Unit filename="/Users/yaoxiao/CS4411/egos/tools/cpr.c">
 			<Option target="egos"/>
 		</Unit>

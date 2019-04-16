@@ -30,28 +30,36 @@ static int statdisk_nblocks(block_store_t *this_bs){
 	struct statdisk_state *sds = this_bs->state;
 
 	sds->nnblocks++;
-	return (*sds->below->nblocks)(sds->below);
+	int r = (*sds->below->nblocks)(sds->below);
+	printf("statdisk_nblocks++ is %d\n", sds->nnblocks);
+	return r;
 }
 
 static int statdisk_setsize(block_store_t *this_bs, block_no nblocks){
 	struct statdisk_state *sds = this_bs->state;
 
 	sds->nsetsize++;
-	return (*sds->below->setsize)(sds->below, nblocks);
+	int r =(*sds->below->setsize)(sds->below, nblocks);
+			printf("statdisk_setsize++\n");
+	return r;
 }
 
 static int statdisk_read(block_store_t *this_bs, block_no offset, block_t *block){
 	struct statdisk_state *sds = this_bs->state;
 
 	sds->nread++;
-	return (*sds->below->read)(sds->below, offset, block);
+
+	int r =(*sds->below->read)(sds->below, offset, block);
+	return r;
 }
 
 static int statdisk_write(block_store_t *this_bs, block_no offset, block_t *block){
 	struct statdisk_state *sds = this_bs->state;
 
 	sds->nwrite++;
-	return (*sds->below->write)(sds->below, offset, block);
+	int r = (*sds->below->write)(sds->below, offset, block);
+
+	return r;
 }
 
 static void statdisk_destroy(block_store_t *this_bs){
@@ -73,11 +81,15 @@ block_store_t *statdisk_init(block_store_t *below){
 	 */
 	struct statdisk_state *sds = new_alloc(struct statdisk_state);
 	sds->below = below;
-
+	sds->nnblocks = 0;
+	sds->nread = 0;
+	sds->nsetsize = 0;
+	sds->nwrite = 0;
 	/* Return a block interface to this inode.
 	 */
 	block_store_t *this_bs = new_alloc(block_store_t);
 	this_bs->state = sds;
+
 	this_bs->nblocks = statdisk_nblocks;
 	this_bs->setsize = statdisk_setsize;
 	this_bs->read = statdisk_read;

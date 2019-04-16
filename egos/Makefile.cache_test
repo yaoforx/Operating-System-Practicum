@@ -1,0 +1,16 @@
+BLOCK_SRC = grass/block/clockdisk.c grass/block/cachedisk.c grass/block/checkdisk.c grass/block/ramdisk.c grass/block/statdisk.c grass/block/treedisk.c grass/block/treedisk_chk.c
+TEST_SRC = test/cache_test/block_store.c test/cache_test/trace.c test/cache_test/tracedisk.c
+SRC = $(TEST_SRC:.c=.o) $(BLOCK_SRC:.c=.o)
+
+INC = grass/block shared earth
+INCLUDE = $(foreach d, $(INC), -I$d)
+CFLAGS = $(INCLUDE) -Wall -DCACHE_TEST
+
+all: trace
+
+trace: test/cache_test/trace.c $(SRC)
+	$(CC) $(CFLAGS) -o $@ $(SRC)
+
+clean:
+	rm -f *.o trace
+

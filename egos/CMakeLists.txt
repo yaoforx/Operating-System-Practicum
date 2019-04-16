@@ -110,6 +110,9 @@ add_executable(egos
         shared/spawn.c
         shared/spawn.h
         shared/syscall.h
+        test/cache_test/block_store.c
+        test/cache_test/trace.c
+        test/cache_test/tracedisk.c
         tools/cpr.c
         tools/elf_cvt.c
         tools/macho_cvt.c)

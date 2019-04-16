@@ -65,7 +65,9 @@ struct process *proc_current;
 
 /* Run (aka ready) queue.
  */
+#ifndef HW_MLFQ
 static struct queue proc_runnable;
+#endif
 
 
 /* A frame is a physical page.
@@ -412,7 +414,7 @@ void proc_term(struct process *proc, int status){
      */
 #ifdef HW_MEASURE
     unsigned long term = clock_now();
-    printf("Process %d died after %u ticks, %u yields, %lu miliseconds\n\r", proc->pid, proc->tick_cnt, proc->yield_cnt, (term - proc->start_time)/ 10);
+    printf("Process %d died after %u ticks, %u yields, %lu miliseconds\n\r", proc->pid, proc->tick_cnt, proc->yield_cnt, (term - proc->start_time)/ 1000);
 #endif
     /* See if the owner is still around.
      */

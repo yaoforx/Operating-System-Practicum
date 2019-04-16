@@ -36,19 +36,23 @@
  * state the block store module needs to keep.
  */
 
+#ifdef CACHE_TEST
+#define BLOCK_SIZE 512
+#define new_alloc(s) malloc(sizeof(s))
+#endif
 typedef unsigned int block_no;		// index of a block
 
 typedef struct block {
-	char bytes[BLOCK_SIZE];
+    char bytes[BLOCK_SIZE];
 } block_t;
 
 typedef struct block_store {
-	void *state;
-	int (*nblocks)(struct block_store *this_bs);
-	int (*read)(struct block_store *this_bs, block_no offset, block_t *block);
-	int (*write)(struct block_store *this_bs, block_no offset, block_t *block);
-	int (*setsize)(struct block_store *this_bs, block_no size);
-	void (*destroy)(struct block_store *this_bs);
+    void *state;
+    int (*nblocks)(struct block_store *this_bs);
+    int (*read)(struct block_store *this_bs, block_no offset, block_t *block);
+    int (*write)(struct block_store *this_bs, block_no offset, block_t *block);
+    int (*setsize)(struct block_store *this_bs, block_no size);
+    void (*destroy)(struct block_store *this_bs);
 } block_store_t;
 
 typedef block_store_t *block_if;			// block store interface
@@ -57,22 +61,43 @@ typedef block_store_t *block_if;			// block store interface
  * 'block_store_t *' type.  Here are the 'init' functions of various
  * available block store types.
  */
-block_store_t *filedisk_init(const char *file_name, block_no nblocks, bool_t sync);
+#ifdef CACHE_TEST
+
 block_store_t *ramdisk_init(block_t *blocks, block_no nblocks);
-block_store_t *protdisk_init(gpid_t below, unsigned int ino);
-block_store_t *partdisk_init(block_if below, block_no delta, block_no nblocks);
+//block_store_t *partdisk_init(block_if below, block_no delta, block_no nblocks);
 block_store_t *treedisk_init(block_store_t *below, unsigned int inode_no);
-block_store_t *fatdisk_init(block_store_t *below, unsigned int inode_no);
-block_store_t *debugdisk_init(block_store_t *below, const char *descr);
+//block_store_t *fatdisk_init(block_store_t *below, unsigned int inode_no);
+//block_store_t *debugdisk_init(block_store_t *below, const char *descr);
 block_store_t *cachedisk_init(block_store_t *below, block_t *blocks, block_no nblocks);
 block_store_t *clockdisk_init(block_if below, block_t *blocks, block_no nblocks);
 block_store_t *statdisk_init(block_store_t *below);
 block_store_t *checkdisk_init(block_store_t *below, const char *descr);
 block_store_t *tracedisk_init(block_store_t *below, char *trace, unsigned int n_inodes);
+void panic(const char *s);
 
-/* Some useful functions on some block store types.
- */
 int treedisk_create(block_store_t *below, unsigned int n_inodes);
 int treedisk_check(block_store_t *below);
 void statdisk_dump_stats(block_store_t *this_bs);
+void clockdisk_dump_stats(block_if bi);
+#else
+
+block_store_t *filedisk_init(const char *file_name, block_no nblocks, bool_t sync);
+//block_store_t *ramdisk_init(block_t *blocks, block_no nblocks);
+block_store_t *protdisk_init(gpid_t below, unsigned int ino);
+block_store_t *partdisk_init(block_if below, block_no delta, block_no nblocks);
+//block_store_t *treedisk_init(block_store_t *below, unsigned int inode_no);
+block_store_t *fatdisk_init(block_store_t *below, unsigned int inode_no);
+block_store_t *debugdisk_init(block_store_t *below, const char *descr);
+//block_store_t *cachedisk_init(block_store_t *below, block_t *blocks, block_no nblocks);
+//block_store_t *clockdisk_init(block_if below, block_t *blocks, block_no nblocks);
+//block_store_t *statdisk_init(block_store_t *below);
+//block_store_t *checkdisk_init(block_store_t *below, const char *descr);
+//block_store_t *tracedisk_init(block_store_t *below, char *trace, unsigned int n_inodes);
 int fatdisk_create(block_store_t *below, unsigned int n_inodes);
+
+/* Some useful functions on some block store types.
+ */
+#endif
+
+
+

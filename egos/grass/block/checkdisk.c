@@ -64,8 +64,10 @@ static int checkdisk_read(block_store_t *this_bs, block_no offset, block_t *bloc
 
 	/* See if I read or wrote the block before.
 	 */
+
 	struct block_list *bl;
 	for (bl = cs->bl; bl != 0; bl = bl->next) {
+		//printf("bl->offset is %d, and offset is %d\n", bl->offset, offset);
 		if (bl->offset == offset) {
 			/* See if it's the same.
 			 */
@@ -75,6 +77,7 @@ static int checkdisk_read(block_store_t *this_bs, block_no offset, block_t *bloc
 			}
 			return 0;
 		}
+
 	}
 
 	/* Add to the block list.

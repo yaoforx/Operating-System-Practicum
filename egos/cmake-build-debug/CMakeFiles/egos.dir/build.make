@@ -1689,9 +1689,81 @@ CMakeFiles/egos.dir/shared/spawn.c.o.provides: CMakeFiles/egos.dir/shared/spawn.
 CMakeFiles/egos.dir/shared/spawn.c.o.provides.build: CMakeFiles/egos.dir/shared/spawn.c.o
 
 
+CMakeFiles/egos.dir/test/cache_test/block_store.c.o: CMakeFiles/egos.dir/flags.make
+CMakeFiles/egos.dir/test/cache_test/block_store.c.o: ../test/cache_test/block_store.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/yaoxiao/CS4411/egos/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_69) "Building C object CMakeFiles/egos.dir/test/cache_test/block_store.c.o"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/egos.dir/test/cache_test/block_store.c.o   -c /Users/yaoxiao/CS4411/egos/test/cache_test/block_store.c
+
+CMakeFiles/egos.dir/test/cache_test/block_store.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/egos.dir/test/cache_test/block_store.c.i"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/yaoxiao/CS4411/egos/test/cache_test/block_store.c > CMakeFiles/egos.dir/test/cache_test/block_store.c.i
+
+CMakeFiles/egos.dir/test/cache_test/block_store.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/egos.dir/test/cache_test/block_store.c.s"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/yaoxiao/CS4411/egos/test/cache_test/block_store.c -o CMakeFiles/egos.dir/test/cache_test/block_store.c.s
+
+CMakeFiles/egos.dir/test/cache_test/block_store.c.o.requires:
+
+.PHONY : CMakeFiles/egos.dir/test/cache_test/block_store.c.o.requires
+
+CMakeFiles/egos.dir/test/cache_test/block_store.c.o.provides: CMakeFiles/egos.dir/test/cache_test/block_store.c.o.requires
+	$(MAKE) -f CMakeFiles/egos.dir/build.make CMakeFiles/egos.dir/test/cache_test/block_store.c.o.provides.build
+.PHONY : CMakeFiles/egos.dir/test/cache_test/block_store.c.o.provides
+
+CMakeFiles/egos.dir/test/cache_test/block_store.c.o.provides.build: CMakeFiles/egos.dir/test/cache_test/block_store.c.o
+
+
+CMakeFiles/egos.dir/test/cache_test/trace.c.o: CMakeFiles/egos.dir/flags.make
+CMakeFiles/egos.dir/test/cache_test/trace.c.o: ../test/cache_test/trace.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/yaoxiao/CS4411/egos/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_70) "Building C object CMakeFiles/egos.dir/test/cache_test/trace.c.o"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/egos.dir/test/cache_test/trace.c.o   -c /Users/yaoxiao/CS4411/egos/test/cache_test/trace.c
+
+CMakeFiles/egos.dir/test/cache_test/trace.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/egos.dir/test/cache_test/trace.c.i"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/yaoxiao/CS4411/egos/test/cache_test/trace.c > CMakeFiles/egos.dir/test/cache_test/trace.c.i
+
+CMakeFiles/egos.dir/test/cache_test/trace.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/egos.dir/test/cache_test/trace.c.s"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/yaoxiao/CS4411/egos/test/cache_test/trace.c -o CMakeFiles/egos.dir/test/cache_test/trace.c.s
+
+CMakeFiles/egos.dir/test/cache_test/trace.c.o.requires:
+
+.PHONY : CMakeFiles/egos.dir/test/cache_test/trace.c.o.requires
+
+CMakeFiles/egos.dir/test/cache_test/trace.c.o.provides: CMakeFiles/egos.dir/test/cache_test/trace.c.o.requires
+	$(MAKE) -f CMakeFiles/egos.dir/build.make CMakeFiles/egos.dir/test/cache_test/trace.c.o.provides.build
+.PHONY : CMakeFiles/egos.dir/test/cache_test/trace.c.o.provides
+
+CMakeFiles/egos.dir/test/cache_test/trace.c.o.provides.build: CMakeFiles/egos.dir/test/cache_test/trace.c.o
+
+
+CMakeFiles/egos.dir/test/cache_test/tracedisk.c.o: CMakeFiles/egos.dir/flags.make
+CMakeFiles/egos.dir/test/cache_test/tracedisk.c.o: ../test/cache_test/tracedisk.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/yaoxiao/CS4411/egos/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_71) "Building C object CMakeFiles/egos.dir/test/cache_test/tracedisk.c.o"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/egos.dir/test/cache_test/tracedisk.c.o   -c /Users/yaoxiao/CS4411/egos/test/cache_test/tracedisk.c
+
+CMakeFiles/egos.dir/test/cache_test/tracedisk.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/egos.dir/test/cache_test/tracedisk.c.i"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/yaoxiao/CS4411/egos/test/cache_test/tracedisk.c > CMakeFiles/egos.dir/test/cache_test/tracedisk.c.i
+
+CMakeFiles/egos.dir/test/cache_test/tracedisk.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/egos.dir/test/cache_test/tracedisk.c.s"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/yaoxiao/CS4411/egos/test/cache_test/tracedisk.c -o CMakeFiles/egos.dir/test/cache_test/tracedisk.c.s
+
+CMakeFiles/egos.dir/test/cache_test/tracedisk.c.o.requires:
+
+.PHONY : CMakeFiles/egos.dir/test/cache_test/tracedisk.c.o.requires
+
+CMakeFiles/egos.dir/test/cache_test/tracedisk.c.o.provides: CMakeFiles/egos.dir/test/cache_test/tracedisk.c.o.requires
+	$(MAKE) -f CMakeFiles/egos.dir/build.make CMakeFiles/egos.dir/test/cache_test/tracedisk.c.o.provides.build
+.PHONY : CMakeFiles/egos.dir/test/cache_test/tracedisk.c.o.provides
+
+CMakeFiles/egos.dir/test/cache_test/tracedisk.c.o.provides.build: CMakeFiles/egos.dir/test/cache_test/tracedisk.c.o
+
+
 CMakeFiles/egos.dir/tools/cpr.c.o: CMakeFiles/egos.dir/flags.make
 CMakeFiles/egos.dir/tools/cpr.c.o: ../tools/cpr.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/yaoxiao/CS4411/egos/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_69) "Building C object CMakeFiles/egos.dir/tools/cpr.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/yaoxiao/CS4411/egos/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_72) "Building C object CMakeFiles/egos.dir/tools/cpr.c.o"
 	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/egos.dir/tools/cpr.c.o   -c /Users/yaoxiao/CS4411/egos/tools/cpr.c
 
 CMakeFiles/egos.dir/tools/cpr.c.i: cmake_force
@@ -1715,7 +1787,7 @@ CMakeFiles/egos.dir/tools/cpr.c.o.provides.build: CMakeFiles/egos.dir/tools/cpr.
 
 CMakeFiles/egos.dir/tools/elf_cvt.c.o: CMakeFiles/egos.dir/flags.make
 CMakeFiles/egos.dir/tools/elf_cvt.c.o: ../tools/elf_cvt.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/yaoxiao/CS4411/egos/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_70) "Building C object CMakeFiles/egos.dir/tools/elf_cvt.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/yaoxiao/CS4411/egos/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_73) "Building C object CMakeFiles/egos.dir/tools/elf_cvt.c.o"
 	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/egos.dir/tools/elf_cvt.c.o   -c /Users/yaoxiao/CS4411/egos/tools/elf_cvt.c
 
 CMakeFiles/egos.dir/tools/elf_cvt.c.i: cmake_force
@@ -1739,7 +1811,7 @@ CMakeFiles/egos.dir/tools/elf_cvt.c.o.provides.build: CMakeFiles/egos.dir/tools/
 
 CMakeFiles/egos.dir/tools/macho_cvt.c.o: CMakeFiles/egos.dir/flags.make
 CMakeFiles/egos.dir/tools/macho_cvt.c.o: ../tools/macho_cvt.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/yaoxiao/CS4411/egos/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_71) "Building C object CMakeFiles/egos.dir/tools/macho_cvt.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/yaoxiao/CS4411/egos/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_74) "Building C object CMakeFiles/egos.dir/tools/macho_cvt.c.o"
 	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/egos.dir/tools/macho_cvt.c.o   -c /Users/yaoxiao/CS4411/egos/tools/macho_cvt.c
 
 CMakeFiles/egos.dir/tools/macho_cvt.c.i: cmake_force
@@ -1831,6 +1903,9 @@ egos_OBJECTS = \
 "CMakeFiles/egos.dir/shared/file.c.o" \
 "CMakeFiles/egos.dir/shared/queue.c.o" \
 "CMakeFiles/egos.dir/shared/spawn.c.o" \
+"CMakeFiles/egos.dir/test/cache_test/block_store.c.o" \
+"CMakeFiles/egos.dir/test/cache_test/trace.c.o" \
+"CMakeFiles/egos.dir/test/cache_test/tracedisk.c.o" \
 "CMakeFiles/egos.dir/tools/cpr.c.o" \
 "CMakeFiles/egos.dir/tools/elf_cvt.c.o" \
 "CMakeFiles/egos.dir/tools/macho_cvt.c.o"
@@ -1906,12 +1981,15 @@ egos: CMakeFiles/egos.dir/shared/ema.c.o
 egos: CMakeFiles/egos.dir/shared/file.c.o
 egos: CMakeFiles/egos.dir/shared/queue.c.o
 egos: CMakeFiles/egos.dir/shared/spawn.c.o
+egos: CMakeFiles/egos.dir/test/cache_test/block_store.c.o
+egos: CMakeFiles/egos.dir/test/cache_test/trace.c.o
+egos: CMakeFiles/egos.dir/test/cache_test/tracedisk.c.o
 egos: CMakeFiles/egos.dir/tools/cpr.c.o
 egos: CMakeFiles/egos.dir/tools/elf_cvt.c.o
 egos: CMakeFiles/egos.dir/tools/macho_cvt.c.o
 egos: CMakeFiles/egos.dir/build.make
 egos: CMakeFiles/egos.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/yaoxiao/CS4411/egos/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_72) "Linking C executable egos"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/yaoxiao/CS4411/egos/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_75) "Linking C executable egos"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/egos.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -1987,6 +2065,9 @@ CMakeFiles/egos.dir/requires: CMakeFiles/egos.dir/shared/ema.c.o.requires
 CMakeFiles/egos.dir/requires: CMakeFiles/egos.dir/shared/file.c.o.requires
 CMakeFiles/egos.dir/requires: CMakeFiles/egos.dir/shared/queue.c.o.requires
 CMakeFiles/egos.dir/requires: CMakeFiles/egos.dir/shared/spawn.c.o.requires
+CMakeFiles/egos.dir/requires: CMakeFiles/egos.dir/test/cache_test/block_store.c.o.requires
+CMakeFiles/egos.dir/requires: CMakeFiles/egos.dir/test/cache_test/trace.c.o.requires
+CMakeFiles/egos.dir/requires: CMakeFiles/egos.dir/test/cache_test/tracedisk.c.o.requires
 CMakeFiles/egos.dir/requires: CMakeFiles/egos.dir/tools/cpr.c.o.requires
 CMakeFiles/egos.dir/requires: CMakeFiles/egos.dir/tools/elf_cvt.c.o.requires
 CMakeFiles/egos.dir/requires: CMakeFiles/egos.dir/tools/macho_cvt.c.o.requires
