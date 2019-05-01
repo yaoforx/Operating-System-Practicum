@@ -1,4 +1,4 @@
-#ifdef HW_FS	
+#ifdef HW_FS
 
 /* FAT File System Layout
  * +-------------+-----------------+---------------+---------------+-----+-------------------+
@@ -33,8 +33,9 @@ struct fatdisk_inode {
 };
 
 struct fatdisk_fatentry {
-    fatentry_no next;           // next entry in the file or in the free list
+    fatentry_no next;// next entry in the file or in the free list
                                 // 0 for EOF or end of free list
+
 };
 
 /* An inode block is filled with inodes.

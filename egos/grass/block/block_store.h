@@ -39,6 +39,7 @@
 #ifdef CACHE_TEST
 #define BLOCK_SIZE 512
 #define new_alloc(s) malloc(sizeof(s))
+
 #endif
 typedef unsigned int block_no;		// index of a block
 
@@ -61,7 +62,7 @@ typedef block_store_t *block_if;			// block store interface
  * 'block_store_t *' type.  Here are the 'init' functions of various
  * available block store types.
  */
-#ifdef CACHE_TEST
+//#ifndef CACHE_TEST
 
 block_store_t *ramdisk_init(block_t *blocks, block_no nblocks);
 //block_store_t *partdisk_init(block_if below, block_no delta, block_no nblocks);
@@ -73,13 +74,13 @@ block_store_t *clockdisk_init(block_if below, block_t *blocks, block_no nblocks)
 block_store_t *statdisk_init(block_store_t *below);
 block_store_t *checkdisk_init(block_store_t *below, const char *descr);
 block_store_t *tracedisk_init(block_store_t *below, char *trace, unsigned int n_inodes);
-void panic(const char *s);
+//void panic(const char *s);
 
 int treedisk_create(block_store_t *below, unsigned int n_inodes);
 int treedisk_check(block_store_t *below);
 void statdisk_dump_stats(block_store_t *this_bs);
 void clockdisk_dump_stats(block_if bi);
-#else
+//#else
 
 block_store_t *filedisk_init(const char *file_name, block_no nblocks, bool_t sync);
 //block_store_t *ramdisk_init(block_t *blocks, block_no nblocks);
@@ -97,7 +98,7 @@ int fatdisk_create(block_store_t *below, unsigned int n_inodes);
 
 /* Some useful functions on some block store types.
  */
-#endif
+//#endif
 
 
 

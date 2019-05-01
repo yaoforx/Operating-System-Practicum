@@ -58,12 +58,10 @@ static void  cache_update(struct clockdisk_state *cs, block_no offset, block_t *
      * we don't want the clock_hand to become too big, set to the smallest if needed(start over)
      */
     if(cs->clock_hand > cs->nblocks) cs->clock_hand %= cs->nblocks;
-    unsigned int cnt = 0;
     /**
-     * Only go one-round clock
-     * break if finish one round
+     * Loop until find a empty cache block
      */
-    while(cnt < cs->nblocks) {
+    while(1) {
         unsigned int i = cs->clock_hand % cs->nblocks;
         if (cs->binfo[i].status != BI_USED) {
             /**
@@ -88,7 +86,6 @@ static void  cache_update(struct clockdisk_state *cs, block_no offset, block_t *
          * No luck, move to the next victim
          */
         cs->clock_hand++;
-        cnt++;
     }
 
 
@@ -141,12 +138,13 @@ static int clockdisk_read(block_if bi, block_no offset, block_t *block) {
      */
     cs->read_miss++;
     if((cs->read_miss + cs->write_miss)%20 == 0) {
-        clockdisk_dump_stats(bi);
+       // clockdisk_dump_stats(bi);
     }
     /**
      * Read from disk and update the cache if needed
      */
     int r = (*cs->below->read)(cs->below, offset, block);
+    if(r == -1) return r;
     cache_update(cs, offset, block);
     return r;
 
@@ -161,17 +159,19 @@ static int clockdisk_write(block_if bi, block_no offset, block_t *block){
     unsigned int i = 0;
     for(;i < cs->nblocks;++i ) {
         if(cs->binfo[i].offset == offset && cs->binfo[i].status != BI_EMPTY) {
+            cs->binfo[i].status = BI_USED;
             break;
         }
 
     }
 
     int r = (*cs->below->write)(cs->below, offset, block);
+    if(r == -1) return r;
     if(i == cs->nblocks) {
         //cache miss
         ++cs->write_miss;
         if((cs->read_miss + cs->write_miss)%20 == 0) {
-            clockdisk_dump_stats(bi);
+           // clockdisk_dump_stats(bi);
         }
 
         cache_update(cs, offset, block);
@@ -181,6 +181,7 @@ static int clockdisk_write(block_if bi, block_no offset, block_t *block){
         //copy disk version to cache
         memcpy(&cs->blocks[i], block, sizeof(block_t));
     }
+
     return r;
 
 

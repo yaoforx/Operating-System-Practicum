@@ -73,7 +73,8 @@ int sys_rpc(gpid_t pid, const void *request, unsigned int reqsize,
 	}
 	proc_current->server = pid;
 	gpid_t src;
-	r = proc_recv(MSG_REPLY, 0, reply, &repsize, &src);
+
+    r = proc_recv(MSG_REPLY, 0, reply, &repsize, &src);
 	log_p("sys_rpc exit pid=%u r=%u", proc_current->pid, r);
 	if (r) {
 		assert(src == pid);

@@ -102,6 +102,7 @@ static struct process proc_set[MAX_PROCS];	// set of all processes
 static bool_t proc_shutting_down;			// cleaning up
 static unsigned long proc_curfew;			// when to shut down
 
+#ifdef HW_MLFQ
 void check_priority(struct process * current){
     unsigned long now = sys_gettime();
     if(now - current->last_run > current->remain_quantum) {
@@ -115,6 +116,7 @@ void check_priority(struct process * current){
 
 
 }
+#endif
 static void proc_cleanup(){
     printf("final clean up\n\r");
 
@@ -414,7 +416,9 @@ void proc_term(struct process *proc, int status){
      */
 #ifdef HW_MEASURE
     unsigned long term = clock_now();
+#ifdef HW_MLFQ
     printf("Process %d died after %u ticks, %u yields, %lu miliseconds\n\r", proc->pid, proc->tick_cnt, proc->yield_cnt, (term - proc->start_time)/ 1000);
+#endif
 #endif
     /* See if the owner is still around.
      */

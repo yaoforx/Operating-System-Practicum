@@ -291,9 +291,11 @@ static int treedisk_read(block_store_t *this_bs, block_no offset, block_t *block
 	if (treedisk_get_snapshot(&snapshot, ts->below, ts->inode_no) < 0) {
 		return -1;
 	}
+    //printf("treedisk_read: Reading inode %d from block %d, offset %d, size is %u\r\n", ts->inode_no, snapshot.inode_blockno,offset, snapshot.inode->nblocks);
 
-	/* See if the offset is too big.
-	 */
+
+    /* See if the offset is too big.
+     */
 	if (offset >= snapshot.inode->nblocks) {
 		fprintf(stderr, "!!TDERR: offset too large\n");
 		return -1;
@@ -352,6 +354,8 @@ static int treedisk_write(block_store_t *this_bs, block_no offset, block_t *bloc
 	if (treedisk_get_snapshot(&snapshot, ts->below, ts->inode_no) < 0) {
 		return -1;
 	}
+    //printf("fatdisk_write: inode %d, size is %d\r\n",ts->inode_no, snapshot.inode->nblocks);
+
 
 	/* Figure out how many levels there are in the tree now.
 	 */
