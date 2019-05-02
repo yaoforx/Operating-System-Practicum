@@ -4,7 +4,7 @@
 #include <assert.h>
 #include "grass.h"
 #include "block_store.h"
-#ifdef HW_FS
+//#ifdef HW_FS
 
 #include "fatdisk.h"
 void panic(const char *s);
@@ -299,11 +299,18 @@ static void fatdisk_free_file(struct fatdisk_snapshot *snapshot,
     if(snapshot->inode->nblocks == 0) {
         return;
     }
+    /**
+     * Find the head fat entry of this inode
+     */
     block_no nblks = snapshot->inode->nblocks;
     fatentry_no fatentry = snapshot->inode->head;
     block_no fatbno;
     union fatdisk_block fatblock;
+    /**
+     * Iteratively set the fat enrty's next to 0.(which I set to be unused flag)
+     */
     while(nblks) {
+
         fatbno = find_fat_blockno(below, fatentry);
         printf("fatdisk_freefile: fatblock number is %d\n",fatbno);
 
@@ -328,14 +335,15 @@ static void fatdisk_free_file(struct fatdisk_snapshot *snapshot,
         nblks--;
 
     }
-
+    /**
+     * Update the inode info to zero(unused flag)
+     */
     snapshot->inode->nblocks = 0;
     snapshot->inode->head = 0;
     if((*below->write)(below, snapshot->inode_blockno,(block_t*) &snapshot->inodeblock) < 0) {
         panic("fatdisk: fatdisk_freefile\n");
         return;
     }
-    printf("End of free_file\r\n");
 
 }
 
@@ -378,7 +386,8 @@ static int fatdisk_write(block_store_t *this_bs, block_no offset, block_t *block
         } else {
             last_entry_bno = find_fat_blockno(fs->below, last_entry);
             /**
-             * Read out the last fat entry's fatblock, we need to modify it
+             * Read out the last fat entry's fatblock, we need to modify it, set up
+             * its next pointer
              */
             if ((*fs->below->read)(fs->below, last_entry_bno, (block_t *) &lastfatblock) < 0) {
                 panic("fatdisk_write: addblocks\n");
@@ -422,6 +431,9 @@ static int fatdisk_write(block_store_t *this_bs, block_no offset, block_t *block
 /* Read a block at the given block number 'offset' and return in *block.
  */
 static int fatdisk_read(block_store_t *this_bs, block_no offset, block_t *block){
+    /**
+     * Get meta info of this inode
+     */
     struct fatdisk_state *ft = this_bs->state;
 
     struct fatdisk_snapshot snapshot;
@@ -531,5 +543,5 @@ block_store_t *fatdisk_init(block_store_t *below, unsigned int inode_no){
     return this_bs;
 }
 
-#endif
+//#endif
 

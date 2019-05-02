@@ -1,4 +1,4 @@
-#ifdef HW_FS
+//#ifdef HW_FS
 
 /* FAT File System Layout
  * +-------------+-----------------+---------------+---------------+-----+-------------------+
@@ -60,4 +60,4 @@ union fatdisk_block {
     struct fatdisk_fatblock fatblock;
 };
 
-#endif
+//#endif
